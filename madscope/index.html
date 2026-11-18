@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mad Scope — Official Site</title>
+<meta name="description" content="Official site of Mad Scope. New music, bio and booking." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;1,6..96,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* ============ TOKENS ============ */
+  :root{
+    --bg:#0a0a0b;
+    --panel:#121214;
+    --panel-2:#1a1a1d;
+    --line:rgba(255,255,255,.14);
+    --line-strong:rgba(255,255,255,.32);
+    --red:#d8262f;
+    --red-deep:#9e1820;
+    --white:#f5f2ec;
+    --muted:#9b968f;
+    --serif:"Bodoni Moda", "Didot", Georgia, serif;
+    --sans:"Inter", system-ui, -apple-system, sans-serif;
+    --gutter:clamp(16px, 4vw, 56px);
+    --max:1240px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--white);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+  .eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);font-weight:500}
+  .title{font-family:var(--serif);color:var(--red);font-weight:500;line-height:.95;letter-spacing:-.01em;font-size:clamp(44px,7vw,104px)}
+  .title em{font-style:italic}
+  .body{color:var(--white);max-width:52ch}
+  .body + .body{margin-top:1em}
+
+  /* Viewfinder corner marks (from the reference screenshot) */
+  .corners{position:relative}
+  .corners::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    --c:var(--line-strong);--l:22px;--w:1px;
+    background:
+      linear-gradient(var(--c),var(--c)) top left/var(--l) var(--w),
+      linear-gradient(var(--c),var(--c)) top left/var(--w) var(--l),
+      linear-gradient(var(--c),var(--c)) top right/var(--l) var(--w),
+      linear-gradient(var(--c),var(--c)) top right/var(--w) var(--l),
+      linear-gradient(var(--c),var(--c)) bottom left/var(--l) var(--w),
+      linear-gradient(var(--c),var(--c)) bottom left/var(--w) var(--l),
+      linear-gradient(var(--c),var(--c)) bottom right/var(--l) var(--w),
+      linear-gradient(var(--c),var(--c)) bottom right/var(--w) var(--l);
+    background-repeat:no-repeat;
+  }
+
+  /* Buttons */
+  .btn{display:inline-flex;align-items:center;gap:14px;padding:16px 26px;border:1px solid var(--red);color:var(--white);font-size:13px;letter-spacing:.24em;text-transform:uppercase;font-weight:500;transition:background .3s, color .3s}
+  .btn:hover{background:var(--red)}
+  .btn svg{width:16px;height:16px;transition:transform .3s}
+  .btn:hover svg{transform:translateX(4px)}
+  .btn--solid{background:var(--red)}
+  .btn--solid:hover{background:var(--red-deep);border-color:var(--red-deep)}
+
+  /* ============ PLACEHOLDER IMAGES ============ */
+  .ph{
+    position:relative;overflow:hidden;
+    background:
+      repeating-linear-gradient(135deg, rgba(255,255,255,.035) 0 1px, transparent 1px 14px),
+      linear-gradient(160deg, hsl(var(--h,355) 30% 18%), hsl(var(--h,355) 25% 8%));
+    display:grid;place-items:center;
+  }
+  .ph__icon{width:28%;max-width:120px;opacity:.35}
+  .ph__label{position:absolute;left:14px;bottom:12px;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+
+  /* ============ HEADER ============ */
+  .header{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .4s, backdrop-filter .4s}
+  .header.scrolled{background:rgba(10,10,11,.78);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .header__inner{display:flex;align-items:center;justify-content:space-between;height:84px}
+  .logo{font-family:var(--serif);font-weight:700;line-height:.82;font-size:22px;letter-spacing:.04em;text-transform:uppercase}
+  .logo span{display:block}
+  .logo span:last-child{color:var(--red)}
+  .nav{display:flex;gap:clamp(18px,3vw,44px)}
+  .nav a{font-size:12px;letter-spacing:.3em;text-transform:uppercase;position:relative;padding:6px 0}
+  .nav a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--red);transition:right .35s}
+  .nav a:hover::after{right:0}
+
+  /* ============ HERO ============ */
+  .hero{position:relative;height:100vh;min-height:640px;overflow:hidden;display:grid;place-items:end center;background:radial-gradient(ellipse at 50% 70%, #1a1416 0%, var(--bg) 70%)}
+  .fog{position:absolute;inset:-20%;pointer-events:none}
+  .fog i{
+    position:absolute;border-radius:50%;
+    background:radial-gradient(circle at center, rgba(235,228,220,.55) 0%, rgba(235,228,220,.18) 38%, transparent 70%);
+    filter:blur(24px);will-change:transform;mix-blend-mode:screen;
+  }
+  .fog--back i{opacity:.7}
+  .fog--front i{opacity:.35;background:radial-gradient(circle at center, rgba(235,228,220,.5) 0%, rgba(235,228,220,.12) 40%, transparent 70%)}
+  @keyframes drift-a{0%{transform:translate(0,0) scale(1)}50%{transform:translate(8vw,-3vh) scale(1.12)}100%{transform:translate(0,0) scale(1)}}
+  @keyframes drift-b{0%{transform:translate(0,0) scale(1.05)}50%{transform:translate(-9vw,2vh) scale(.94)}100%{transform:translate(0,0) scale(1.05)}}
+  @keyframes drift-c{0%{transform:translate(0,0)}50%{transform:translate(5vw,4vh) scale(1.15)}100%{transform:translate(0,0)}}
+
+  .hero__figure{position:relative;z-index:2;width:min(560px,78vw);aspect-ratio:4/5;margin-bottom:-2px}
+  .hero__figure .ph{position:absolute;inset:0;background:transparent}
+  .hero__figure svg.bust{position:absolute;inset:auto 0 0 0;width:100%;height:auto}
+  .hero__figure .ph__label{left:50%;transform:translateX(-50%);bottom:auto;top:8%;white-space:nowrap}
+  .hero__tag{position:absolute;z-index:4;left:var(--gutter);bottom:clamp(24px,6vh,60px)}
+  .hero__tag .title{font-size:clamp(40px,6vw,88px)}
+  .scroll-cue{position:absolute;z-index:4;right:var(--gutter);bottom:clamp(24px,6vh,60px);display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .scroll-cue b{display:block;width:1px;height:48px;background:linear-gradient(var(--red),transparent);animation:cue 2s ease-in-out infinite;transform-origin:top}
+  @keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* ============ SECTIONS (shared) ============ */
+  section{position:relative}
+  .section{padding:clamp(90px,14vh,160px) 0}
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity 1s cubic-bezier(.2,.7,.2,1), transform 1s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}
+
+  /* ============ NEW RELEASE ============ */
+  .release__head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:56px;flex-wrap:wrap}
+  .release__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,96px);align-items:center}
+  .release__meta{margin-bottom:32px}
+  .release__meta h3{font-family:var(--serif);font-size:clamp(30px,3.4vw,46px);font-weight:500;line-height:1.05;margin-bottom:8px}
+  .release__meta p{color:var(--muted)}
+  .platforms{list-style:none;border-top:1px solid var(--line)}
+  .platforms li{border-bottom:1px solid var(--line)}
+  .platforms a{display:flex;align-items:center;gap:20px;padding:18px 4px;transition:padding .3s, background .3s}
+  .platforms a:hover{padding-left:16px;background:rgba(216,38,47,.06)}
+  .p-icon{width:44px;height:44px;border-radius:50%;border:1px solid var(--line-strong);display:grid;place-items:center;flex:none;transition:border-color .3s, background .3s}
+  .p-icon svg{width:18px;height:18px}
+  .platforms a:hover .p-icon{border-color:var(--red);background:var(--red)}
+  .platforms .p-name{flex:1;font-size:15px;letter-spacing:.2em;text-transform:uppercase}
+  .platforms .p-arrow{width:18px;height:18px;flex:none;opacity:.4;transition:opacity .3s, transform .3s}
+  .platforms a:hover .p-arrow{opacity:1;transform:translateX(4px)}
+  .release__cover{display:flex;flex-direction:column;gap:24px;align-items:stretch}
+  .release__cover .ph{aspect-ratio:1;--h:350;box-shadow:0 40px 80px -30px rgba(216,38,47,.35)}
+
+  /* ============ ABOUT ============ */
+  .about{background:var(--panel);overflow:hidden;padding-bottom:0}
+  .about__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,6vw,96px);align-items:center}
+  .about__text .title{margin:18px 0 36px}
+  .about__text .btn{margin-top:40px}
+  .about__img{position:relative;margin-right:calc(var(--gutter) * -1)}
+  .about__img .ph{aspect-ratio:4/5;--h:220}
+  .about__img .ph::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--panel) 0%,transparent 30%)}
+  .wave{display:block;width:100%;height:clamp(80px,12vw,160px);margin-top:clamp(60px,10vh,120px)}
+  .wave path{animation:wave-drift 14s ease-in-out infinite alternate}
+  .wave path:nth-child(2){animation-duration:18s;animation-direction:alternate-reverse}
+  @keyframes wave-drift{from{transform:translateX(0)}to{transform:translateX(-6%)}}
+
+  /* ============ MUSIC (sticky scroll) ============ */
+  .music{height:calc(var(--count,3) * 80vh + 100vh)}
+  .music__stage{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding-top:84px}
+  .music__head{display:flex;justify-content:space-between;align-items:end;margin-bottom:clamp(28px,5vh,56px);gap:24px}
+  .counter{font-family:var(--serif);font-size:clamp(22px,2vw,30px);color:var(--muted)}
+  .counter b{color:var(--white);font-weight:500}
+  .music__grid{display:grid;grid-template-columns:auto 1fr;gap:clamp(40px,7vw,120px);align-items:center}
+
+  .vinyl{position:relative;width:clamp(240px,34vw,440px);aspect-ratio:1;margin-right:clamp(70px,10vw,150px)}
+  .record{
+    position:absolute;inset:3%;border-radius:50%;
+    transform:translateX(30%);
+    transition:transform .9s cubic-bezier(.6,.05,.25,1);
+    z-index:1;
+  }
+  .record__disc{
+    position:absolute;inset:0;border-radius:50%;
+    background:
+      radial-gradient(circle, transparent 0 14%, rgba(255,255,255,.04) 14.5% 15%, transparent 15.5%),
+      repeating-radial-gradient(circle, #111 0 2px, #1b1b1d 2px 3px),
+      #111;
+    box-shadow:0 0 0 1px rgba(255,255,255,.06), 0 30px 60px -10px rgba(0,0,0,.8);
+    animation:spin 3.2s linear infinite;
+  }
+  .record__disc::before{ /* light sheen */
+    content:"";position:absolute;inset:0;border-radius:50%;
+    background:conic-gradient(from 20deg, transparent 0 10%, rgba(255,255,255,.10) 14%, transparent 22% 55%, rgba(255,255,255,.07) 60%, transparent 68%);
+  }
+  .record__label{position:absolute;inset:34%;border-radius:50%;background:var(--red);display:grid;place-items:center;box-shadow:inset 0 0 0 6px rgba(0,0,0,.18)}
+  .record__label::after{content:"";width:9%;aspect-ratio:1;border-radius:50%;background:var(--bg)}
+  .record__label span{position:absolute;top:22%;font-size:clamp(6px,.6vw,9px);letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .vinyl.swap .record{transform:translateX(0)}
+
+  .sleeve{position:absolute;inset:0;z-index:2;box-shadow:12px 0 30px -8px rgba(0,0,0,.7)}
+  .sleeve .ph{position:absolute;inset:0;transition:opacity .45s}
+  .vinyl.swap .sleeve .ph{opacity:.25}
+  .sleeve::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 92%,rgba(0,0,0,.35));pointer-events:none}
+
+  .track__title{font-family:var(--serif);font-size:clamp(34px,4.2vw,64px);font-weight:500;line-height:1;margin-bottom:10px;transition:opacity .4s, transform .4s}
+  .track__meta{color:var(--muted);margin-bottom:32px;transition:opacity .4s}
+  .swapping .track__title,.swapping .track__meta{opacity:0;transform:translateY(10px)}
+
+  .pill{display:inline-flex;flex-direction:column;gap:6px;padding:10px;border:1px solid var(--line-strong);border-radius:999px}
+  .pill-row{display:flex;align-items:center;gap:22px}
+  .pill a{width:52px;height:52px;border-radius:50%;background:var(--panel-2);display:grid;place-items:center;transition:background .3s, transform .3s}
+  .pill a:hover{background:var(--red);transform:scale(1.06)}
+  .pill a svg{width:20px;height:20px}
+  .pill-links{display:flex;flex-direction:column;gap:6px}
+  .pill-links a{height:52px;display:flex;align-items:center;font-size:13px;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid var(--line);min-width:220px;justify-content:space-between}
+  .pill-links a:hover{color:var(--red)}
+  .platform-block{display:flex;align-items:center;gap:28px}
+
+  .progress{display:flex;gap:10px;margin-top:clamp(32px,6vh,64px)}
+  .progress i{height:2px;width:42px;background:var(--line);transition:background .4s, width .4s}
+  .progress i.on{background:var(--red);width:72px}
+  .scroll-hint{margin-top:16px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+
+  /* ============ CONTACT ============ */
+  .contact{background:var(--panel);border-top:1px solid var(--line)}
+  .marquee{overflow:hidden;border-bottom:1px solid var(--line);padding:22px 0;white-space:nowrap}
+  .marquee__track{display:inline-flex;gap:48px;animation:marquee 32s linear infinite}
+  .marquee__track span{font-family:var(--serif);font-size:clamp(24px,3vw,40px);color:var(--muted)}
+  .marquee__track span em{color:var(--red)}
+  @keyframes marquee{to{transform:translateX(-50%)}}
+  .contact__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px);align-items:start;margin-top:56px}
+  .contact .title{margin:18px 0 0}
+  .reasons{list-style:none;display:flex;flex-direction:column;gap:12px;margin-top:20px}
+  .reason{width:100%;display:flex;align-items:center;gap:20px;padding:22px 24px;border:1px solid var(--line-strong);text-align:left;transition:background .3s, color .3s, border-color .3s}
+  .reason:hover{border-color:var(--white)}
+  .reason .box{width:18px;height:18px;border:1.5px solid currentColor;flex:none;opacity:.8;transition:background .3s, border-color .3s}
+  .reason .num{color:var(--red);font-size:13px;letter-spacing:.1em}
+  .reason .lbl{font-family:var(--serif);font-size:clamp(20px,2vw,28px);text-transform:uppercase;letter-spacing:.02em}
+  .reason[aria-pressed="true"]{background:var(--white);color:var(--bg);border-color:var(--white)}
+  .reason[aria-pressed="true"] .box{background:var(--red);border-color:var(--red);opacity:1}
+
+  .card{background:var(--bg);padding:clamp(28px,4vw,52px)}
+  .card__goes{font-size:12px;letter-spacing:.32em;text-transform:uppercase}
+  .card__goes b{color:var(--red);font-weight:500;margin-right:14px}
+  .card__name{font-family:var(--serif);font-size:clamp(40px,4.6vw,64px);font-weight:500;line-height:1;margin:22px 0 10px}
+  .card__role{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);padding-bottom:28px;border-bottom:1px solid var(--line)}
+  .field{padding:24px 0;border-bottom:1px solid var(--line)}
+  .field .eyebrow{display:block;margin-bottom:8px}
+  .field__row{display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .field__val{font-family:var(--serif);font-size:clamp(20px,1.9vw,28px);overflow-wrap:anywhere;min-width:0}
+  .copy{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);transition:color .3s;flex:none}
+  .copy:hover,.copy.done{color:var(--red)}
+  .tip{display:flex;gap:14px;margin-top:26px;font-family:var(--serif);font-style:italic;font-size:19px;color:var(--white)}
+  .tip b{color:var(--red);font-style:normal}
+  .card.flip > *{animation:cardIn .5s ease both}
+  @keyframes cardIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* ============ FOOTER ============ */
+  .footer{padding:72px 0 40px;border-top:1px solid var(--line)}
+  .footer__top{display:flex;justify-content:space-between;align-items:end;gap:32px;flex-wrap:wrap}
+  .footer .big{font-family:var(--serif);font-weight:700;color:var(--red);font-size:clamp(60px,13vw,200px);line-height:.8;letter-spacing:-.02em;text-transform:uppercase}
+  .socials{display:flex;gap:28px;flex-wrap:wrap}
+  .socials a{font-size:12px;letter-spacing:.3em;text-transform:uppercase}
+  .socials a:hover{color:var(--red)}
+  .footer__base{display:flex;justify-content:space-between;gap:16px;margin-top:48px;color:var(--muted);font-size:13px;flex-wrap:wrap}
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px){
+    .release__grid,.about__grid,.contact__grid{grid-template-columns:1fr}
+    .release__cover{order:-1}
+    .about__img{margin-right:0}
+    .music__grid{grid-template-columns:1fr;gap:28px}
+    .vinyl{width:min(58vw,300px);margin-right:24%}
+    .platform-block{gap:18px}
+    .pill-links a{min-width:0;width:44vw}
+    .pill a,.pill-links a{height:44px}
+    .pill a{width:44px}
+    .music__head .title{font-size:44px}
+    .nav{gap:16px}
+    .nav a{letter-spacing:.18em;font-size:11px}
+  }
+  @media (max-width: 520px){
+    .logo{font-size:18px}
+    .scroll-cue{display:none}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- Shared SVG icons -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-img" viewBox="0 0 48 48"><rect x="3" y="7" width="42" height="34" fill="none" stroke="#fff" stroke-width="2"/><circle cx="15" cy="18" r="4" fill="none" stroke="#fff" stroke-width="2"/><path d="M5 39 L19 24 L28 32 L34 26 L44 36" fill="none" stroke="#fff" stroke-width="2"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M3 12h17M14 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <!-- Generic placeholder platform glyphs (swap for official brand icons later) -->
+  <symbol id="i-stream" viewBox="0 0 24 24"><path d="M5 9c4.5-1.6 9.5-1.2 14 1M6 12.5c3.8-1.2 8-.9 11.5.8M7 16c3-.8 6-.6 9 .6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="6.5" cy="18" r="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="16.5" cy="16" r="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 17h10a4 4 0 0 0 0-8 5 5 0 0 0-9.6 1.2A3.5 3.5 0 0 0 7 17z" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+</svg>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="top">
+  <div class="wrap header__inner">
+    <a href="#top" class="logo" aria-label="Mad Scope — home"><span>Mad</span><span>Scope</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#music">Music</a>
+      <a href="#about">Bio</a>
+      <a href="#contact">Booking</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ============ HERO ============ -->
+<section class="hero" aria-label="Intro">
+  <div class="fog fog--back" aria-hidden="true">
+    <i style="width:42vw;height:34vw;left:12%;top:34%;animation:drift-a 26s ease-in-out infinite"></i>
+    <i style="width:40vw;height:34vw;right:12%;top:30%;animation:drift-b 32s ease-in-out infinite"></i>
+    <i style="width:34vw;height:28vw;left:34%;top:20%;animation:drift-c 38s ease-in-out infinite"></i>
+    <i style="width:36vw;height:30vw;left:22%;top:48%;animation:drift-b 29s ease-in-out infinite"></i>
+    <i style="width:36vw;height:30vw;right:22%;top:50%;animation:drift-a 35s ease-in-out infinite"></i>
+    <i style="width:30vw;height:24vw;left:6%;top:56%;animation:drift-c 41s ease-in-out infinite"></i>
+    <i style="width:30vw;height:24vw;right:6%;top:58%;animation:drift-a 44s ease-in-out infinite"></i>
+  </div>
+
+  <!-- Placeholder for the illustrated portrait -->
+  <div class="hero__figure">
+    <div class="ph">
+      <span class="ph__label">Hero illustration · placeholder</span>
+      <svg class="bust" viewBox="0 0 400 500" aria-hidden="true">
+        <defs>
+          <linearGradient id="bust" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#2a2426"/><stop offset="1" stop-color="#0d0c0d"/>
+          </linearGradient>
+        </defs>
+        <ellipse cx="200" cy="175" rx="78" ry="92" fill="url(#bust)" stroke="rgba(255,255,255,.12)"/>
+        <path d="M160 250 Q200 285 240 250 L250 300 Q340 320 375 380 L400 500 L0 500 L25 380 Q60 320 150 300 Z" fill="url(#bust)" stroke="rgba(255,255,255,.12)"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="fog fog--front" aria-hidden="true">
+    <i style="width:70vw;height:30vw;left:-15%;top:72%;animation:drift-c 24s ease-in-out infinite"></i>
+    <i style="width:70vw;height:30vw;right:-15%;top:76%;animation:drift-a 30s ease-in-out infinite"></i>
+  </div>
+
+  <div class="scroll-cue" aria-hidden="true">Scroll <b></b></div>
+</section>
+
+<!-- ============ NEW RELEASE ============ -->
+<section class="section release" id="new-release">
+  <div class="wrap">
+    <div class="release__head">
+      <div>
+        <p class="eyebrow reveal">Out now</p>
+        <h2 class="title reveal d1">New <em>Release</em></h2>
+      </div>
+    </div>
+
+    <div class="release__grid">
+      <div class="reveal d1">
+        <div class="release__meta">
+          <h3>Release Title</h3>
+          <p>Single · 2026 · placeholder copy</p>
+        </div>
+        <ul class="platforms">
+          <li><a href="#"><span class="p-icon"><svg><use href="#i-stream"/></svg></span><span class="p-name">Spotify</span><svg class="p-arrow"><use href="#i-arrow"/></svg></a></li>
+          <li><a href="#"><span class="p-icon"><svg><use href="#i-note"/></svg></span><span class="p-name">Apple Music</span><svg class="p-arrow"><use href="#i-arrow"/></svg></a></li>
+          <li><a href="#"><span class="p-icon"><svg><use href="#i-play"/></svg></span><span class="p-name">YouTube</span><svg class="p-arrow"><use href="#i-arrow"/></svg></a></li>
+          <li><a href="#"><span class="p-icon"><svg><use href="#i-cloud"/></svg></span><span class="p-name">SoundCloud</span><svg class="p-arrow"><use href="#i-arrow"/></svg></a></li>
+        </ul>
+      </div>
+
+      <div class="release__cover reveal d2">
+        <div class="ph corners"><svg class="ph__icon"><use href="#i-img"/></svg><span class="ph__label">Cover art · placeholder</span></div>
+        <a href="#" class="btn btn--solid" style="justify-content:center">Stream now <svg><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section about" id="about">
+  <div class="wrap about__grid">
+    <div class="about__text">
+      <p class="eyebrow reveal">Bio</p>
+      <h2 class="title reveal d1">About <em>Me</em></h2>
+      <p class="body reveal d2">Placeholder bio. Two or three short paragraphs introduce the artist: where they're from, the sound, and what drives the music. Keep this teaser tight and let the full bio page carry the rest of the story.</p>
+      <p class="body reveal d2">Second paragraph placeholder: notable moments, collaborators, recent shows, or a line that sums up the new era.</p>
+      <a href="#" class="btn reveal d3">Read full bio <svg><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="about__img reveal d2">
+      <div class="ph" style="--h:215"><svg class="ph__icon"><use href="#i-img"/></svg><span class="ph__label" style="left:auto;right:14px">Artist portrait · placeholder</span></div>
+    </div>
+  </div>
+  <!-- wavy divider -->
+  <svg class="wave" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 70 C180 20 320 120 520 80 S860 10 1040 70 S1340 130 1600 60 L1600 160 L0 160 Z" fill="rgba(216,38,47,.18)"/>
+    <path d="M0 100 C200 60 360 150 560 110 S900 50 1080 100 S1360 150 1600 90 L1600 160 L0 160 Z" fill="#0a0a0b"/>
+  </svg>
+</section>
+
+<!-- ============ MUSIC (scroll through releases) ============ -->
+<section class="music" id="music" aria-label="Music">
+  <div class="music__stage">
+    <div class="wrap">
+      <div class="music__head">
+        <div>
+          <p class="eyebrow">Discography</p>
+          <h2 class="title">Music</h2>
+        </div>
+        <p class="counter"><b id="count-cur">01</b> / <span id="count-total">03</span></p>
+      </div>
+
+      <div class="music__grid" id="music-grid">
+        <div class="vinyl" id="vinyl">
+          <div class="record" aria-hidden="true">
+            <div class="record__disc"></div>
+            <div class="record__label"><span>Mad Scope</span></div>
+          </div>
+          <div class="sleeve">
+            <div class="ph" id="sleeve-art"><svg class="ph__icon"><use href="#i-img"/></svg><span class="ph__label">Album art · placeholder</span></div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="track__title" id="track-title">Album Title One</h3>
+          <p class="track__meta" id="track-meta">Album · 2026 · 12 tracks</p>
+          <div class="platform-block">
+            <div class="pill" aria-hidden="true">
+              <a href="#" tabindex="-1"><svg><use href="#i-stream"/></svg></a>
+              <a href="#" tabindex="-1"><svg><use href="#i-note"/></svg></a>
+              <a href="#" tabindex="-1"><svg><use href="#i-play"/></svg></a>
+            </div>
+            <div class="pill-links">
+              <a href="#">Spotify <svg width="16" height="16"><use href="#i-arrow"/></svg></a>
+              <a href="#">Apple Music <svg width="16" height="16"><use href="#i-arrow"/></svg></a>
+              <a href="#">YouTube <svg width="16" height="16"><use href="#i-arrow"/></svg></a>
+            </div>
+          </div>
+          <div class="progress" id="progress"></div>
+          <p class="scroll-hint">Keep scrolling for more releases</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Booking <em>·</em> Press <em>·</em> Collaboration <em>·</em> Let's talk <em>·</em></span>
+      <span>Booking <em>·</em> Press <em>·</em> Collaboration <em>·</em> Let's talk <em>·</em></span>
+      <span>Booking <em>·</em> Press <em>·</em> Collaboration <em>·</em> Let's talk <em>·</em></span>
+      <span>Booking <em>·</em> Press <em>·</em> Collaboration <em>·</em> Let's talk <em>·</em></span>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:clamp(60px,10vh,110px)">
+    <div class="wrap contact__grid">
+      <div>
+        <p class="eyebrow reveal">Contact</p>
+        <h2 class="title reveal d1">Get in <em>touch</em></h2>
+        <p class="eyebrow reveal d2" style="margin-top:48px">What's it about?</p>
+        <ul class="reasons reveal d2" id="reasons">
+          <li><button class="reason" data-key="booking" aria-pressed="true"><span class="box"></span><span class="num">01</span><span class="lbl">Booking</span></button></li>
+          <li><button class="reason" data-key="press" aria-pressed="false"><span class="box"></span><span class="num">02</span><span class="lbl">Press / Interview</span></button></li>
+          <li><button class="reason" data-key="collab" aria-pressed="false"><span class="box"></span><span class="num">03</span><span class="lbl">Collaboration</span></button></li>
+        </ul>
+      </div>
+
+      <div class="card corners reveal d3" id="card" aria-live="polite">
+        <p class="card__goes"><b>Goes to</b><span id="c-topic">Booking</span></p>
+        <p class="card__name" id="c-name">Manager Name</p>
+        <p class="card__role" id="c-role">Management &amp; Booking</p>
+        <div class="field">
+          <span class="eyebrow">Email</span>
+          <div class="field__row">
+            <a class="field__val" id="c-email" href="mailto:booking@madscope.example">booking@madscope.example</a>
+            <button class="copy" id="copy">Copy</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="eyebrow">Phone</span>
+          <a class="field__val" id="c-phone" href="tel:+10000000000">+1 (000) 000-0000</a>
+        </div>
+        <p class="tip"><b>✱</b><span id="c-tip">Add the date, city, venue and expected audience.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <p class="big">Mad<br>Scope</p>
+      <nav class="socials" aria-label="Social">
+        <a href="#">Instagram</a><a href="#">TikTok</a><a href="#">YouTube</a><a href="#">X</a>
+      </nav>
+    </div>
+    <div class="footer__base">
+      <span>© 2026 Mad Scope. All rights reserved.</span>
+      <span>Draft · placeholder content</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- Header background on scroll ---------- */
+const header = document.querySelector('.header');
+const onScrollHeader = () => header.classList.toggle('scrolled', scrollY > 40);
+addEventListener('scroll', onScrollHeader, {passive:true}); onScrollHeader();
+
+/* ---------- Reveal on scroll ---------- */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+}, {threshold:.15});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ---------- Music: scroll through releases ---------- */
+const releases = [
+  {title:'Album Title One',   meta:'Album · 2026 · 12 tracks', hue:355},
+  {title:'Single Title Two',  meta:'Single · 2025',            hue:210},
+  {title:'EP Title Three',    meta:'EP · 2024 · 5 tracks',     hue:28},
+];
+const music = document.getElementById('music');
+const vinyl = document.getElementById('vinyl');
+const grid = document.getElementById('music-grid');
+const art = document.getElementById('sleeve-art');
+const tTitle = document.getElementById('track-title');
+const tMeta = document.getElementById('track-meta');
+const cur = document.getElementById('count-cur');
+const progress = document.getElementById('progress');
+music.style.setProperty('--count', releases.length);
+document.getElementById('count-total').textContent = String(releases.length).padStart(2,'0');
+releases.forEach(() => progress.appendChild(document.createElement('i')));
+
+let active = -1, swapTimer;
+function show(i, animate){
+  if (i === active) return;
+  active = i;
+  const r = releases[i];
+  const apply = () => {
+    art.style.setProperty('--h', r.hue);
+    tTitle.textContent = r.title;
+    tMeta.textContent = r.meta;
+    cur.textContent = String(i+1).padStart(2,'0');
+    [...progress.children].forEach((b,k) => b.classList.toggle('on', k===i));
+  };
+  if (!animate){ apply(); return; }
+  // record slides back into the sleeve, art swaps, record slides out again
+  clearTimeout(swapTimer);
+  vinyl.classList.add('swap'); grid.classList.add('swapping');
+  swapTimer = setTimeout(() => {
+    apply();
+    vinyl.classList.remove('swap'); grid.classList.remove('swapping');
+  }, 550);
+}
+function onScrollMusic(){
+  const rect = music.getBoundingClientRect();
+  const total = music.offsetHeight - innerHeight;
+  const p = Math.min(Math.max(-rect.top / total, 0), .9999);
+  show(Math.floor(p * releases.length), true);
+}
+show(0, false);
+addEventListener('scroll', onScrollMusic, {passive:true});
+
+/* ---------- Contact: reason picker ---------- */
+const contacts = {
+  booking:{topic:'Booking',          name:'Manager Name',   role:'Management & Booking',  email:'booking@madscope.example', phone:'+1 (000) 000-0000', tip:'Add the date, city, venue and expected audience.'},
+  press:  {topic:'Press / Interview',name:'Publicist Name', role:'Press & Publicity',     email:'press@madscope.example',   phone:'+1 (000) 000-0001', tip:'Include your outlet, story angle and deadline.'},
+  collab: {topic:'Collaboration',    name:'Team Contact',   role:'A&R & Collaborations',  email:'collab@madscope.example',  phone:'+1 (000) 000-0002', tip:'Share a link to your work and what you have in mind.'},
+};
+const card = document.getElementById('card');
+const $ = id => document.getElementById(id);
+document.querySelectorAll('.reason').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.reason').forEach(b => b.setAttribute('aria-pressed', b===btn));
+    const c = contacts[btn.dataset.key];
+    $('c-topic').textContent = c.topic;
+    $('c-name').textContent = c.name;
+    $('c-role').textContent = c.role;
+    $('c-email').textContent = c.email; $('c-email').href = 'mailto:' + c.email;
+    $('c-phone').textContent = c.phone; $('c-phone').href = 'tel:' + c.phone.replace(/[^+\d]/g,'');
+    $('c-tip').textContent = c.tip;
+    card.classList.remove('flip'); void card.offsetWidth; card.classList.add('flip');
+    $('copy').textContent = 'Copy'; $('copy').classList.remove('done');
+  });
+});
+$('copy').addEventListener('click', async () => {
+  const text = $('c-email').textContent;
+  try { await navigator.clipboard.writeText(text); }
+  catch { const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
+  $('copy').textContent = 'Copied'; $('copy').classList.add('done');
+});
+</script>
+</body>
+</html>
