@@ -75,17 +75,62 @@
   .ph__icon{width:28%;max-width:120px;opacity:.35}
   .ph__label{position:absolute;left:14px;bottom:12px;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.5)}
 
-  /* ============ HEADER ============ */
-  .header{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .4s, backdrop-filter .4s}
-  .header.scrolled{background:rgba(10,10,11,.78);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .header__inner{display:flex;align-items:center;justify-content:space-between;height:84px}
-  .logo{font-family:var(--serif);font-weight:700;line-height:.82;font-size:22px;letter-spacing:.04em;text-transform:uppercase}
-  .logo span{display:block}
-  .logo span:last-child{color:var(--red)}
-  .nav{display:flex;gap:clamp(18px,3vw,44px)}
-  .nav a{font-size:12px;letter-spacing:.3em;text-transform:uppercase;position:relative;padding:6px 0}
-  .nav a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--red);transition:right .35s}
-  .nav a:hover::after{right:0}
+  /* ============ HEADER (floating bar) ============ */
+  .header{position:fixed;top:20px;left:0;right:0;z-index:50;display:flex;flex-direction:column;align-items:center;gap:20px;pointer-events:none}
+  .bar{
+    pointer-events:auto;position:relative;height:60px;width:min(480px,calc(100% - 32px));
+    background:rgba(10,10,11,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border:1px solid var(--line);overflow:hidden;
+    transition:width .5s cubic-bezier(.7,0,.2,1);
+  }
+  .bar__menu{position:absolute;left:0;top:0;width:60px;height:58px;display:grid;place-items:center}
+  .burger{position:relative;width:24px;height:14px}
+  .burger i{position:absolute;left:0;right:0;height:1.5px;background:var(--white);transition:transform .4s, opacity .3s, top .4s}
+  .burger i:nth-child(1){top:0}.burger i:nth-child(2){top:6px}.burger i:nth-child(3){top:12px}
+  .logo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;transition:opacity .3s}
+  .logo span{color:var(--red)}
+  .bar__play{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:var(--red);display:grid;place-items:center;transition:opacity .3s, background .3s, transform .3s}
+  .bar__play:hover{background:var(--red-deep);transform:translateY(-50%) scale(1.06)}
+  .bar__play .tri{width:0;height:0;border-left:8px solid var(--white);border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px}
+  .eq{display:none;align-items:end;gap:2px;height:12px}
+  .eq b{width:2px;background:var(--white);animation:eq .9s ease-in-out infinite}
+  .eq b:nth-child(2){animation-delay:-.3s}.eq b:nth-child(3){animation-delay:-.6s}.eq b:nth-child(4){animation-delay:-.15s}
+  @keyframes eq{0%,100%{height:3px}50%{height:12px}}
+  .bar__play[aria-pressed="true"] .tri{display:none}
+  .bar__play[aria-pressed="true"] .eq{display:flex}
+
+  /* open state: bar collapses to a close button, panel drops in */
+  .header.open .bar{width:60px}
+  .header.open .logo,.header.open .bar__play{opacity:0;pointer-events:none}
+  .header.open .burger i:nth-child(1){top:6px;transform:rotate(45deg)}
+  .header.open .burger i:nth-child(2){opacity:0}
+  .header.open .burger i:nth-child(3){top:6px;transform:rotate(-45deg)}
+
+  .menu{
+    pointer-events:none;width:min(480px,calc(100% - 32px));max-height:calc(100vh - 120px);overflow:auto;
+    background:rgba(10,10,11,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    padding:40px 44px 44px;opacity:0;transform:translateY(-16px);visibility:hidden;
+    transition:opacity .4s, transform .5s cubic-bezier(.2,.7,.2,1), visibility 0s .5s;
+  }
+  .header.open .menu{pointer-events:auto;opacity:1;transform:none;visibility:visible;transition:opacity .4s .1s, transform .5s .1s cubic-bezier(.2,.7,.2,1)}
+  .menu__logo{font-family:var(--serif);font-weight:700;font-size:44px;line-height:.85;text-transform:uppercase;letter-spacing:.02em;margin-bottom:36px}
+  .menu__logo span{display:block;color:var(--red)}
+  .menu__nav{list-style:none;display:flex;flex-direction:column;gap:4px;margin-bottom:40px}
+  .menu__nav a{display:flex;align-items:baseline;gap:16px;font-family:var(--serif);font-size:30px;text-transform:uppercase;line-height:1.25;transition:color .25s, padding .3s}
+  .menu__nav a small{font-family:var(--sans);font-size:11px;color:var(--red);letter-spacing:.1em}
+  .menu__nav a:hover{color:var(--red);padding-left:8px}
+  .menu .eyebrow{display:block;margin-bottom:16px;color:var(--white)}
+  .menu__cols{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;margin-bottom:40px}
+  .menu__cols ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .menu__cols a{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);transition:color .25s}
+  .menu__cols a:hover{color:var(--red)}
+  .menu__cta{display:flex;gap:8px}
+  .menu__cta .btn{flex:1;justify-content:center}
+  .menu__cta .round{width:54px;height:54px;flex:none;border-radius:50%;background:var(--red);display:grid;place-items:center;transition:background .3s, transform .3s}
+  .menu__cta .round svg{width:18px;height:18px;transform:rotate(-45deg)}
+  .menu__cta:hover .round{background:var(--red-deep);transform:rotate(45deg)}
+  .scrim{position:fixed;inset:0;z-index:49;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:opacity .4s, visibility 0s .4s}
+  .scrim.on{opacity:1;visibility:visible;transition:opacity .4s}
 
   /* ============ HERO ============ */
   .hero{position:relative;height:100vh;min-height:640px;overflow:hidden;display:grid;place-items:end center;background:radial-gradient(ellipse at 50% 70%, #1a1416 0%, var(--bg) 70%)}
@@ -152,7 +197,7 @@
 
   /* ============ MUSIC (sticky scroll) ============ */
   .music{height:calc(var(--count,3) * 80vh + 100vh)}
-  .music__stage{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding-top:84px}
+  .music__stage{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding-top:96px}
   .music__head{display:flex;justify-content:space-between;align-items:end;margin-bottom:clamp(28px,5vh,56px);gap:24px}
   .counter{font-family:var(--serif);font-size:clamp(22px,2vw,30px);color:var(--muted)}
   .counter b{color:var(--white);font-weight:500}
@@ -263,11 +308,12 @@
     .pill a,.pill-links a{height:44px}
     .pill a{width:44px}
     .music__head .title{font-size:44px}
-    .nav{gap:16px}
-    .nav a{letter-spacing:.18em;font-size:11px}
   }
   @media (max-width: 520px){
-    .logo{font-size:18px}
+    .header{top:10px}
+    .menu{padding:32px 26px 32px}
+    .menu__logo{font-size:36px}
+    .menu__nav a{font-size:26px}
     .scroll-cue{display:none}
   }
   @media (prefers-reduced-motion: reduce){
@@ -290,18 +336,36 @@
 </svg>
 
 <!-- ============ HEADER ============ -->
-<header class="header" id="top">
-  <div class="wrap header__inner">
-    <a href="#top" class="logo" aria-label="Mad Scope — home"><span>Mad</span><span>Scope</span></a>
-    <nav class="nav" aria-label="Main">
-      <a href="#music">Music</a>
-      <a href="#about">Bio</a>
-      <a href="#contact">Booking</a>
-    </nav>
+<div class="scrim" id="scrim"></div>
+<header class="header" id="header">
+  <div class="bar">
+    <button class="bar__menu" id="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+      <span class="burger"><i></i><i></i><i></i></span>
+    </button>
+    <a href="#top" class="logo" aria-label="Mad Scope — home">Mad <span>Scope</span></a>
+    <button class="bar__play" id="play-btn" aria-pressed="false" aria-label="Play latest release">
+      <span class="tri"></span><span class="eq"><b></b><b></b><b></b><b></b></span>
+    </button>
   </div>
+
+  <nav class="menu corners" id="menu" aria-label="Main">
+    <p class="menu__logo">Mad<span>Scope</span></p>
+    <ul class="menu__nav">
+      <li><a href="#top"><small>01</small>Home</a></li>
+      <li><a href="#music"><small>02</small>Music</a></li>
+      <li><a href="#about"><small>03</small>Bio</a></li>
+      <li><a href="#contact"><small>04</small>Booking</a></li>
+    </ul>
+    <span class="eyebrow">Platforms</span>
+    <div class="menu__cols">
+      <ul><li><a href="#">Spotify</a></li><li><a href="#">Apple Music</a></li><li><a href="#">YouTube</a></li><li><a href="#">SoundCloud</a></li></ul>
+      <ul><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">X</a></li></ul>
+    </div>
+    <a href="#contact" class="menu__cta"><span class="btn btn--solid">Bookings</span><span class="round"><svg><use href="#i-arrow"/></svg></span></a>
+  </nav>
 </header>
 
-<main>
+<main id="top">
 <!-- ============ HERO ============ -->
 <section class="hero" aria-label="Intro">
   <div class="fog fog--back" aria-hidden="true">
@@ -500,10 +564,32 @@
 </footer>
 
 <script>
-/* ---------- Header background on scroll ---------- */
-const header = document.querySelector('.header');
-const onScrollHeader = () => header.classList.toggle('scrolled', scrollY > 40);
-addEventListener('scroll', onScrollHeader, {passive:true}); onScrollHeader();
+/* ---------- Floating header: menu + play ---------- */
+const headerEl = document.getElementById('header');
+const menuBtn = document.getElementById('menu-btn');
+const scrim = document.getElementById('scrim');
+function setMenu(open){
+  headerEl.classList.toggle('open', open);
+  scrim.classList.toggle('on', open);
+  menuBtn.setAttribute('aria-expanded', open);
+  menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+}
+menuBtn.addEventListener('click', () => setMenu(!headerEl.classList.contains('open')));
+scrim.addEventListener('click', () => setMenu(false));
+document.querySelectorAll('#menu a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+
+// Play button: set AUDIO_SRC to the latest single's preview file to make it play for real
+const AUDIO_SRC = '';
+const playBtn = document.getElementById('play-btn');
+const audio = AUDIO_SRC ? new Audio(AUDIO_SRC) : null;
+playBtn.addEventListener('click', () => {
+  const on = playBtn.getAttribute('aria-pressed') !== 'true';
+  playBtn.setAttribute('aria-pressed', on);
+  playBtn.setAttribute('aria-label', on ? 'Pause' : 'Play latest release');
+  if (audio) on ? audio.play() : audio.pause();
+});
+if (audio) audio.addEventListener('ended', () => playBtn.click());
 
 /* ---------- Reveal on scroll ---------- */
 const io = new IntersectionObserver(entries => {
