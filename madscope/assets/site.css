@@ -177,9 +177,11 @@ ul{list-style:none}
 /* Music — pinned scroll through releases */
 .music{height:calc(var(--count,3) * 85vh + 100vh)}
 .music__stage{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding-top:calc(var(--bar-h) + 30px)}
+.music__stage > .wrap{width:100%} /* full width, so layout doesn't shift with title length */
 .music__head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:clamp(24px,5vh,56px)}
 .counter{font-family:var(--display);font-weight:700;font-size:28px;color:var(--muted)}
-.counter b{color:var(--white);font-weight:800}
+.counter{font-variant-numeric:tabular-nums}
+.counter b{color:var(--white);font-weight:800;display:inline-block;min-width:.6em;text-align:right}
 .music__grid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(40px,7vw,120px);align-items:center}
 
 .vinyl{position:relative;width:clamp(240px,33vw,460px);aspect-ratio:1;margin-right:clamp(64px,9vw,150px)}
@@ -198,7 +200,7 @@ ul{list-style:none}
 
 .track__mask{overflow:hidden}
 .track__title{font-family:var(--display);font-weight:800;font-size:clamp(46px,5.4vw,88px);line-height:.9;text-transform:uppercase;transition:transform .5s var(--ease)}
-.track__meta{color:var(--muted);margin:12px 0 30px;transition:transform .5s var(--ease)}
+.track__meta{color:var(--muted);margin:12px 0 30px;min-height:3.2em;transition:transform .5s var(--ease)} /* room for 2 lines so nothing below jumps */
 .swapping .track__title,.swapping .track__meta{transform:translateY(110%)}
 
 .platform-block{display:flex;align-items:center;gap:26px}
