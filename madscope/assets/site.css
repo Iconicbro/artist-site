@@ -298,8 +298,11 @@ ul{list-style:none}
   .about{display:block;min-height:0}
   .about__img{position:relative;width:auto;margin:40px calc(var(--gutter) * -1) calc(clamp(96px,14vh,170px) * -1)}
   .about__img img{height:auto;aspect-ratio:4/5;
-    -webkit-mask-image:radial-gradient(ellipse 58% 52% at 50% 48%,#000 60%,transparent 100%);
-    mask-image:radial-gradient(ellipse 58% 52% at 50% 48%,#000 60%,transparent 100%)}
+    /* rectangular soft edges: horizontal and vertical fades intersected */
+    -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 12%,#000 88%,transparent 100%),linear-gradient(0deg,transparent 0%,#000 12%,#000 90%,transparent 100%);
+    -webkit-mask-composite:source-in;
+    mask-image:linear-gradient(90deg,transparent 0%,#000 12%,#000 88%,transparent 100%),linear-gradient(0deg,transparent 0%,#000 12%,#000 90%,transparent 100%);
+    mask-composite:intersect}
   .facts{position:static}
   .music__grid{grid-template-columns:1fr;gap:26px}
   .vinyl{width:min(56vw,300px)}
