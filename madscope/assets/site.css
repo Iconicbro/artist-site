@@ -161,12 +161,18 @@ ul{list-style:none}
 .platforms .p-note{font-size:14px;color:var(--muted)}
 
 /* About teaser */
-.about{overflow:hidden;padding-bottom:0}
-.about__grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(36px,6vw,100px);align-items:center}
-.about__text{padding-bottom:clamp(40px,8vh,100px)}
+/* Photo fills the right half edge to edge; its edges fade into the section */
+.about{position:relative;overflow:hidden;min-height:min(100svh,920px);display:flex;align-items:center}
+.about__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(36px,6vw,100px);align-items:center;width:100%}
+.about__text{position:relative;z-index:1}
+.about__img{position:absolute;top:0;right:0;bottom:0;width:52%}
 .about__text .title{margin-bottom:32px}
 .about__text .prose{margin-bottom:36px}
-.about__img img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:center top;-webkit-mask-image:linear-gradient(0deg,transparent 0%,#000 22%);mask-image:linear-gradient(0deg,transparent 0%,#000 22%)}
+.about__img img{width:100%;height:100%;object-fit:cover;object-position:50% 0;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 32%),linear-gradient(0deg,transparent 0%,#000 16%,#000 86%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(90deg,transparent 0%,#000 32%),linear-gradient(0deg,transparent 0%,#000 16%,#000 86%,transparent 100%);
+  mask-composite:intersect}
 
 /* Music — pinned scroll through releases */
 .music{height:calc(var(--count,3) * 85vh + 100vh)}
@@ -287,7 +293,11 @@ ul{list-style:none}
    ========================================================= */
 @media (max-width:900px){
   .release__grid,.about__grid,.contact__grid,.bio__grid{grid-template-columns:1fr}
-  .about__img{max-width:520px}
+  .about{display:block;min-height:0}
+  .about__img{position:relative;width:auto;margin:40px calc(var(--gutter) * -1) calc(clamp(96px,14vh,170px) * -1)}
+  .about__img img{height:auto;aspect-ratio:4/5;
+    -webkit-mask-image:radial-gradient(ellipse 58% 52% at 50% 48%,#000 60%,transparent 100%);
+    mask-image:radial-gradient(ellipse 58% 52% at 50% 48%,#000 60%,transparent 100%)}
   .facts{position:static}
   .music__grid{grid-template-columns:1fr;gap:26px}
   .vinyl{width:min(56vw,300px)}
