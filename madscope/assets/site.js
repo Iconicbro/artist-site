@@ -24,6 +24,9 @@
     matchMedia('(min-width: 901px)').addEventListener('change', e => { if (e.matches) setMenu(false); });
   }
 
+  const onHeaderScroll = () => header.classList.toggle('scrolled', scrollY > innerHeight * 0.6);
+  addEventListener('scroll', onHeaderScroll, { passive: true }); onHeaderScroll();
+
   /* ---------- Play / stop music ---------- */
   const playBtn = $('.play');
   if (playBtn) {
@@ -86,9 +89,22 @@
     releases.forEach(() => bars.appendChild(document.createElement('i')));
 
     let active = -1, timer;
-    const apply = i => {
+    const sleeve = art.parentElement;
+    const swapCover = r => {
+      const next = new Image();
+      next.src = r.cover; next.alt = `${r.title} cover art`; next.width = next.height = 733;
+      next.className = 'incoming';
+      sleeve.appendChild(next);
+      const go = () => requestAnimationFrame(() => requestAnimationFrame(() => next.classList.add('enter')));
+      (next.decode ? next.decode() : Promise.resolve()).then(go, go);
+      next.addEventListener('transitionend', () => {
+        [...sleeve.querySelectorAll('img')].forEach(img => { if (img !== next) img.remove(); });
+        next.classList.remove('incoming', 'enter');
+      }, { once: true });
+    };
+    const apply = (i, animate) => {
       const r = releases[i];
-      art.src = r.cover; art.alt = `${r.title} cover art`;
+      if (animate) swapCover(r); else { art.src = r.cover; art.alt = `${r.title} cover art`; }
       label.style.backgroundImage = `url("${r.cover}")`;
       tTitle.textContent = r.title; tMeta.textContent = r.meta;
       cur.textContent = i + 1;
@@ -97,10 +113,10 @@
     const show = (i, animate) => {
       if (i === active) return;
       active = i;
-      if (!animate || reduced) return apply(i);
+      if (!animate || reduced) return apply(i, false);
       clearTimeout(timer);
       vinyl.classList.add('swap'); grid.classList.add('swapping');
-      timer = setTimeout(() => { apply(i); vinyl.classList.remove('swap'); grid.classList.remove('swapping'); }, 560);
+      timer = setTimeout(() => { apply(i, true); vinyl.classList.remove('swap'); grid.classList.remove('swapping'); }, 480);
     };
     const onScroll = () => {
       const total = music.offsetHeight - innerHeight;

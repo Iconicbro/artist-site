@@ -63,7 +63,8 @@ ul{list-style:none}
    HEADER — floating bar. Desktop: open nav. Mobile: hamburger.
    ========================================================= */
 .site-header{position:fixed;top:18px;left:0;right:0;z-index:50;display:flex;flex-direction:column;align-items:center;gap:14px;pointer-events:none}
-.bar{pointer-events:auto;position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px;height:var(--bar-h);width:min(760px,calc(100% - 32px));padding:0 14px 0 26px;background:rgba(0,0,0,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);transition:width .5s var(--ease)}
+.bar{pointer-events:auto;position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px;height:var(--bar-h);width:min(760px,calc(100% - 32px));padding:0 14px 0 26px;background:rgba(0,0,0,.22);backdrop-filter:blur(6px) saturate(1.2);-webkit-backdrop-filter:blur(6px) saturate(1.2);border:1px solid rgba(247,243,238,.12);text-shadow:0 1px 10px rgba(0,0,0,.55);transition:width .5s var(--ease),background .4s}
+.site-header.scrolled .bar{background:rgba(0,0,0,.5)}
 .logo{display:block;line-height:0}
 .logo img{height:26px;width:auto}
 .bar__nav{display:flex;gap:clamp(20px,3vw,40px)}
@@ -183,9 +184,11 @@ ul{list-style:none}
 .record__label{position:absolute;inset:33%;border-radius:50%;background:var(--red) center/cover;box-shadow:inset 0 0 0 5px rgba(0,0,0,.35)}
 .record__label::after{content:"";position:absolute;left:50%;top:50%;width:10%;aspect-ratio:1;border-radius:50%;background:var(--ink);transform:translate(-50%,-50%)}
 @keyframes spin{to{transform:rotate(360deg)}}
-.sleeve{position:absolute;inset:0;z-index:2;overflow:hidden;background:var(--surface-2);box-shadow:14px 0 34px -8px #000}
-.sleeve img{width:100%;height:100%;object-fit:cover;transition:clip-path .55s var(--ease),transform .55s var(--ease)}
-.vinyl.swap .sleeve img{clip-path:inset(0 100% 0 0);transform:translateX(-12%)}
+.sleeve{position:absolute;inset:0;z-index:2;overflow:hidden;box-shadow:14px 0 34px -8px #000}
+.sleeve img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* new cover wipes in over the old one, so the sleeve is never empty */
+.sleeve img.incoming{clip-path:inset(0 0 0 100%);transition:clip-path .6s var(--ease)}
+.sleeve img.incoming.enter{clip-path:inset(0)}
 
 .track__mask{overflow:hidden}
 .track__title{font-family:var(--display);font-weight:800;font-size:clamp(46px,5.4vw,88px);line-height:.9;text-transform:uppercase;transition:transform .5s var(--ease)}
