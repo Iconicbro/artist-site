@@ -81,8 +81,8 @@
         links: [['Spotify','stream','https://open.spotify.com/album/7o2KQxOvsnPM8Olr8AkPXn'], ['Apple Music','note','https://music.apple.com/us/album/stack-paper-single/1891539277'], ['All platforms','more','https://distrokid.com/hyperfollow/madscope1/stack-paper']] },
       { title: "Til a Mawnin'", meta: 'Single from 1 Charge Productions', cover: 'media/covers/til-a-mawnin.jpg',
         links: [['Spotify','stream','https://open.spotify.com/album/56jRZKs2EN43qtaYWaPINh'], ['Apple Music','note','https://music.apple.com/us/album/til-a-mawnin-single/1892399414'], ['All platforms','more','https://distrokid.com/hyperfollow/madscope1/til-a-mawnin']] },
-      { title: 'Rebirth', meta: 'EP. Streaming links coming soon', cover: 'media/covers/rebirth.jpg',
-        links: [['YouTube','play','https://www.youtube.com/@MADSCOPEMUSIC']] },
+      { title: 'Pull Up', meta: 'From the Rebirth EP', cover: 'media/covers/rebirth.jpg',
+        links: [['Spotify','stream','https://open.spotify.com/album/69FgC0X9atAocUMPrE0esC'], ['Apple Music','note','https://music.apple.com/us/album/pull-up-single/1821136822'], ['All platforms','more','https://distrokid.com/hyperfollow/madscope1/pull-up']] },
     ];
     releases.forEach(r => { const i = new Image(); i.src = r.cover; }); // preload covers
     const vinyl = $('#vinyl'), grid = $('#music-grid'), art = $('#sleeve-art'), label = $('.record__label');
