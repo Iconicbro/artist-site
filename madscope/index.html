@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Madscope</title>
+<meta name="description" content="Madscope is a Jamaican dancehall recording and performing artist. Stream Stack Paper, read the bio and book Madscope through 1 Charge Productions." />
+<meta name="theme-color" content="#000000" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Big+Shoulders+Display:wght@700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+<link rel="preload" as="image" href="media/hero-poster.jpg" />
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-stream" viewBox="0 0 24 24"><path d="M5 9c4.5-1.6 9.5-1.2 14 1M6 12.5c3.8-1.2 8-.9 11.5.8M7 16c3-.8 6-.6 9 .6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="6.5" cy="18" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="16.5" cy="16" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.8" fill="currentColor"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><circle cx="19" cy="12" r="1.8" fill="currentColor"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 12h2M7 8v8M11 5v14M15 9v6M19 7v10M21 12h0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+</svg>
+
+<!-- ============ HEADER ============ -->
+<div class="scrim"></div>
+<header class="site-header">
+  <div class="bar">
+    <button class="bar__menu" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><span class="burger"><i></i><i></i><i></i></span></button>
+    <a href="#top" class="logo" aria-label="Madscope home"><img src="media/logo.svg" alt="Madscope" width="228" height="37" /></a>
+    <nav class="bar__nav" aria-label="Main">
+      <a href="#music">Music</a>
+      <a href="bio.html">Bio</a>
+      <a href="#contact">Booking</a>
+    </nav>
+    <div class="play-wrap">
+      <button class="play" data-src="media/track.mp3" aria-pressed="false" aria-label="Play music"><span class="tri"></span><span class="eq"><b></b><b></b><b></b><b></b></span></button>
+      <span class="play__tip" aria-hidden="true">Play music</span>
+    </div>
+  </div>
+
+  <nav class="menu" id="menu" aria-label="Mobile">
+    <img class="menu__logo" src="media/logo.svg" alt="" width="228" height="37" />
+    <ul class="menu__links">
+      <li><a href="#top">Home</a></li>
+      <li><a href="#music">Music</a></li>
+      <li><a href="bio.html">Bio</a></li>
+      <li><a href="#contact">Booking</a></li>
+    </ul>
+    <div class="menu__cols">
+      <div><p class="label">Listen</p><ul><li><a href="https://open.spotify.com/album/7o2KQxOvsnPM8Olr8AkPXn" target="_blank" rel="noopener">Spotify</a></li><li><a href="https://music.apple.com/us/album/stack-paper-single/1891539277" target="_blank" rel="noopener">Apple Music</a></li><li><a href="https://www.youtube.com/@MADSCOPEMUSIC" target="_blank" rel="noopener">YouTube</a></li></ul></div>
+      <div><p class="label">Follow</p><ul><li><a href="https://www.instagram.com/1chargeproductions/">Instagram</a></li><li><a href="https://www.tiktok.com/@1chargeproductions">TikTok</a></li></ul></div>
+    </div>
+    <a href="#contact" class="btn btn--red">Book Madscope</a>
+  </nav>
+</header>
+
+<main id="main">
+<!-- ============ HERO ============ -->
+<section class="hero" id="top" aria-label="Introduction">
+  <video class="hero__video" data-loops="6" muted playsinline autoplay preload="auto" poster="media/hero-poster.jpg" aria-hidden="true">
+    <source src="media/hero.mp4" type="video/mp4" />
+  </video>
+  <div class="hero__shade"></div>
+  <div class="hero__copy wrap">
+    <p class="label slide">Dancehall from Windsor Castle, Jamaica</p>
+    <h1 class="hero__mark slide-x d1"><img src="media/logo.svg" alt="Madscope" width="228" height="37" /></h1>
+    <p class="hero__line slide d2">Authentic Jamaican energy. Versatile sound. Built for the stage.</p>
+    <div class="hero__actions slide d3">
+      <a href="#new-release" class="btn btn--red">Listen to Stack Paper</a>
+      <a href="#contact" class="btn">Book Madscope</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEW RELEASE ============ -->
+<section class="section" id="new-release" aria-labelledby="release-title">
+  <div class="wrap release__grid">
+    <a class="release__cover slide-x" href="https://distrokid.com/hyperfollow/madscope1/stack-paper" target="_blank" rel="noopener" aria-label="Stream Stack Paper">
+      <img src="media/covers/stack-paper.jpg" alt="Stack Paper cover art" width="733" height="733" loading="lazy" />
+    </a>
+    <div class="release__body">
+      <p class="label slide">New single</p>
+      <h2 class="title slide d1" id="release-title">Stack Paper</h2>
+      <p class="lead slide d2">The latest from Madscope, backed by 1 Charge Productions. Out now on Spotify and Apple Music.</p>
+      <ul class="platforms slide d2">
+        <li><a href="https://open.spotify.com/album/7o2KQxOvsnPM8Olr8AkPXn" target="_blank" rel="noopener"><span class="p-icon"><svg><use href="#i-stream"/></svg></span><span class="p-name">Spotify</span></a></li>
+        <li><a href="https://music.apple.com/us/album/stack-paper-single/1891539277" target="_blank" rel="noopener"><span class="p-icon"><svg><use href="#i-note"/></svg></span><span class="p-name">Apple Music</span></a></li>
+        <li><a href="https://www.youtube.com/@MADSCOPEMUSIC" target="_blank" rel="noopener"><span class="p-icon"><svg><use href="#i-play"/></svg></span><span class="p-name">YouTube</span><span class="p-note">@MADSCOPEMUSIC</span></a></li>
+        <li><a href="https://distrokid.com/hyperfollow/madscope1/stack-paper" target="_blank" rel="noopener"><span class="p-icon"><svg><use href="#i-more"/></svg></span><span class="p-name">All platforms</span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT (teaser) ============ -->
+<section class="section surface about" id="about" aria-labelledby="about-title">
+  <div class="wrap about__grid">
+    <div class="about__text">
+      <h2 class="title slide" id="about-title">Who is Madscope</h2>
+      <div class="prose slide d1">
+        <p>Kamau Hinds, known as Madscope, is a Jamaican recording and performing artist bringing island energy, lyrical precision and range to today's dancehall scene.</p>
+        <p>Raised in Windsor Castle, on the border of St. Mary and Portland, he started out as "Scope." The name grew into Madscope as his sharp, precise delivery became a sound of its own.</p>
+      </div>
+      <a href="bio.html" class="btn slide d2">Read the full bio</a>
+    </div>
+    <div class="about__img slide-x d1">
+      <img src="media/about.jpg" alt="Madscope seated on a red chair at a bar, wearing gold chains" width="1377" height="1800" loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<!-- ============ MUSIC (pinned scroll) ============ -->
+<section class="music" id="music" aria-labelledby="music-title">
+  <div class="music__stage">
+    <div class="wrap">
+      <div class="music__head">
+        <h2 class="title" id="music-title">Music</h2>
+        <p class="counter" aria-live="polite"><b id="count-cur">1</b> of <span id="count-total">3</span></p>
+      </div>
+      <div class="music__grid" id="music-grid">
+        <div class="vinyl" id="vinyl">
+          <div class="record" aria-hidden="true"><div class="record__disc"></div><div class="record__label"></div></div>
+          <div class="sleeve"><img id="sleeve-art" src="media/covers/stack-paper.jpg" alt="Stack Paper cover art" width="733" height="733" /></div>
+        </div>
+        <div>
+          <div class="track__mask"><h3 class="track__title" id="track-title">Stack Paper</h3></div>
+          <div class="track__mask"><p class="track__meta" id="track-meta">Single from 1 Charge Productions</p></div>
+          <div class="platform-block">
+            <div class="pill" id="pill" aria-hidden="true"></div>
+            <div class="pill-links" id="pill-links"></div>
+          </div>
+          <div class="progress" id="progress" aria-hidden="true"></div>
+          <p class="label music__hint">Keep scrolling for more releases</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="surface" id="contact" aria-labelledby="contact-title">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span>Bookings<em>/</em></span><span>Features<em>/</em></span><span>Dubs<em>/</em></span><span>Riddims<em>/</em></span><span>Collaborations<em>/</em></span>
+      <span>Bookings<em>/</em></span><span>Features<em>/</em></span><span>Dubs<em>/</em></span><span>Riddims<em>/</em></span><span>Collaborations<em>/</em></span>
+    </div>
+  </div>
+  <div class="section">
+    <div class="wrap contact__grid">
+      <div class="contact__intro">
+        <h2 class="title slide" id="contact-title">Let's work</h2>
+        <p class="lead slide d1">Live shows, festivals, private events, dubplates, DJ drops, features and collaborations.</p>
+        <p class="label slide d1" id="reasons-label">What do you need?</p>
+        <div class="reasons slide d2" role="radiogroup" aria-labelledby="reasons-label">
+          <button class="reason" role="radio" aria-checked="true" tabindex="0" data-key="live"><span class="box"></span><span class="lbl">Live show or event</span></button>
+          <button class="reason" role="radio" aria-checked="false" tabindex="-1" data-key="collab"><span class="box"></span><span class="lbl">Feature or collaboration</span></button>
+          <button class="reason" role="radio" aria-checked="false" tabindex="-1" data-key="dubs"><span class="box"></span><span class="lbl">Dubplate or DJ drop</span></button>
+          <button class="reason" role="radio" aria-checked="false" tabindex="-1" data-key="press"><span class="box"></span><span class="lbl">Press or promotion</span></button>
+        </div>
+      </div>
+
+      <div class="card slide-x d2" id="card" aria-live="polite">
+        <p class="card__topic">About: <b id="c-topic">Live show or event</b></p>
+        <p class="card__name">1 Charge Productions</p>
+        <p class="card__role">Management and booking for Madscope</p>
+        <div class="field">
+          <span class="label">Email</span>
+          <div class="field__row">
+            <a class="field__val" href="mailto:1chargeproductions@gmail.com">1chargeproductions@gmail.com</a>
+            <button class="copy" id="copy" aria-label="Copy email address">Copy</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="label">WhatsApp</span>
+          <a class="field__val" href="https://wa.me/19544445396">954-444-5396</a>
+        </div>
+        <div class="field">
+          <span class="label">Instagram</span>
+          <a class="field__val" href="https://www.instagram.com/1chargeproductions/">@1chargeproductions</a>
+        </div>
+        <p class="tip" id="c-tip">Share the date, city, venue and expected crowd size.</p>
+        <a class="btn btn--red" id="c-send" href="mailto:1chargeproductions@gmail.com?subject=Booking%20enquiry%3A%20live%20show%20%2F%20event">Email 1 Charge Productions</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <p class="footer__mark"><img src="media/logo.svg" alt="Madscope" width="228" height="37" loading="lazy" /></p>
+      <nav class="socials" aria-label="Social">
+        <a href="https://www.instagram.com/1chargeproductions/">Instagram</a>
+        <a href="https://www.tiktok.com/@1chargeproductions">TikTok</a>
+        <a href="https://www.youtube.com/@MADSCOPEMUSIC">YouTube</a>
+      </nav>
+    </div>
+    <div class="footer__base">
+      <span>&copy; 2026 Madscope. Backed by 1 Charge Productions.</span>
+      <span>Bring the energy. Make the connection. Let's work.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>
