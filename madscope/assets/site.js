@@ -77,12 +77,16 @@
   const music = $('#music');
   if (music) {
     const releases = [
-      { title: 'Stack Paper',   meta: 'Single from 1 Charge Productions', cover: 'media/covers/stack-paper.jpg' },
-      { title: "Til a Mawnin'", meta: 'Single from 1 Charge Productions', cover: 'media/covers/til-a-mawnin.jpg' },
-      { title: 'Wine Up',       meta: 'Moroccan Riddim, produced by Cornelius Daley, 2024', cover: 'media/covers/wine-up.jpg' },
+      { title: 'Stack Paper', meta: 'Single from 1 Charge Productions', cover: 'media/covers/stack-paper.jpg',
+        links: [['Spotify','stream','https://open.spotify.com/album/7o2KQxOvsnPM8Olr8AkPXn'], ['Apple Music','note','https://music.apple.com/us/album/stack-paper-single/1891539277'], ['All platforms','more','https://distrokid.com/hyperfollow/madscope1/stack-paper']] },
+      { title: "Til a Mawnin'", meta: 'Single from 1 Charge Productions', cover: 'media/covers/til-a-mawnin.jpg',
+        links: [['Spotify','stream','https://open.spotify.com/album/56jRZKs2EN43qtaYWaPINh'], ['Apple Music','note','https://music.apple.com/us/album/til-a-mawnin-single/1892399414'], ['All platforms','more','https://distrokid.com/hyperfollow/madscope1/til-a-mawnin']] },
+      { title: 'Rebirth', meta: 'EP. Streaming links coming soon', cover: 'media/covers/rebirth.jpg',
+        links: [['YouTube','play','https://www.youtube.com/@MADSCOPEMUSIC']] },
     ];
     releases.forEach(r => { const i = new Image(); i.src = r.cover; }); // preload covers
     const vinyl = $('#vinyl'), grid = $('#music-grid'), art = $('#sleeve-art'), label = $('.record__label');
+    const pill = $('#pill'), pillLinks = $('#pill-links');
     const tTitle = $('#track-title'), tMeta = $('#track-meta'), cur = $('#count-cur'), bars = $('#progress');
     music.style.setProperty('--count', releases.length);
     $('#count-total').textContent = releases.length;
@@ -107,6 +111,9 @@
       if (animate) swapCover(r); else { art.src = r.cover; art.alt = `${r.title} cover art`; }
       label.style.backgroundImage = `url("${r.cover}")`;
       tTitle.textContent = r.title; tMeta.textContent = r.meta;
+      pill.innerHTML = r.links.map(([, icon]) => `<span><svg><use href="#i-${icon}"/></svg></span>`).join('');
+      pillLinks.innerHTML = r.links.map(([name, , href]) =>
+        `<a href="${href}" target="_blank" rel="noopener">${name}<span class="sr-only"> for ${r.title} (opens in a new tab)</span></a>`).join('');
       cur.textContent = i + 1;
       [...bars.children].forEach((b, k) => b.classList.toggle('on', k === i));
     };

@@ -203,7 +203,7 @@ ul{list-style:none}
 .track__meta{color:var(--muted);margin:12px 0 30px;min-height:3.2em;transition:transform .5s var(--ease)} /* room for 2 lines so nothing below jumps */
 .swapping .track__title,.swapping .track__meta{transform:translateY(110%)}
 
-.platform-block{display:flex;align-items:center;gap:26px}
+.platform-block{display:flex;align-items:flex-start;gap:26px;min-height:176px} /* room for 3 links so releases with fewer don't shift */
 .pill{display:flex;flex-direction:column;gap:6px;padding:9px;border:1px solid var(--line-strong);border-radius:999px}
 .pill span{width:48px;height:48px;border-radius:50%;background:var(--surface-2);display:grid;place-items:center}
 .pill svg{width:20px;height:20px}
@@ -319,3 +319,9 @@ ul{list-style:none}
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .slide,.slide-x{clip-path:none;transform:none}
 }
+
+/* Linked releases on the bio page */
+.rel-link{text-decoration:underline;text-decoration-color:var(--red);text-decoration-thickness:2px;text-underline-offset:5px}
+.rel-link:hover{color:var(--red)}
+.chips a{display:block;margin:-10px -18px;padding:10px 18px;transition:background .25s,color .25s}
+.chips a:hover{background:var(--red)}
