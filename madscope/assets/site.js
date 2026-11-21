@@ -27,22 +27,38 @@
   const onHeaderScroll = () => header.classList.toggle('scrolled', scrollY > innerHeight * 0.6);
   addEventListener('scroll', onHeaderScroll, { passive: true }); onHeaderScroll();
 
-  /* ---------- Play / stop music ---------- */
+  /* ---------- Audio: header background music + 30s previews (one plays at a time) ---------- */
+  const fadeTo = (a, target, ms, done) => {
+    clearInterval(a._fade);
+    const from = a.volume, t0 = performance.now();
+    a._fade = setInterval(() => {
+      const k = Math.min(1, (performance.now() - t0) / ms);
+      a.volume = from + (target - from) * k;
+      if (k >= 1) { clearInterval(a._fade); done && done(); }
+    }, 30);
+  };
+  let stopPreview = () => {};
+  const bg = { stop: () => {}, on: false };
   const playBtn = $('.play');
   if (playBtn) {
     const tip = $('.play__tip');
     const audio = new Audio(playBtn.dataset.src);
     audio.preload = 'none';
+    audio.loop = true; // full song, then starts again until stopped
     const set = on => {
+      bg.on = on;
       playBtn.setAttribute('aria-pressed', on);
-      playBtn.setAttribute('aria-label', on ? 'Stop music' : 'Play music');
-      if (tip) tip.textContent = on ? 'Now playing. Tap to stop' : 'Play music';
+      playBtn.setAttribute('aria-label', on ? 'Stop Stack Paper' : 'Play Stack Paper');
+      if (tip) tip.textContent = on ? 'Now playing: Stack Paper. Tap to stop' : 'Play Stack Paper';
     };
+    bg.stop = () => { if (!bg.on) return; set(false); fadeTo(audio, 0, 900, () => audio.pause()); };
     playBtn.addEventListener('click', () => {
-      if (audio.paused) { audio.play().then(() => set(true)).catch(() => set(false)); }
-      else { audio.pause(); set(false); }
+      if (bg.on) return bg.stop();
+      stopPreview();
+      clearInterval(audio._fade);
+      audio.volume = 0;
+      audio.play().then(() => { set(true); fadeTo(audio, 1, 1600); }).catch(() => set(false));
     });
-    audio.addEventListener('ended', () => { audio.currentTime = 0; set(false); });
   }
 
   /* ---------- Hero video: play N times, then hold the last frame ---------- */
@@ -77,9 +93,9 @@
   const music = $('#music');
   if (music) {
     const releases = [
-      { title: 'Stack Paper', meta: 'Single from 1 Charge Productions', cover: 'media/covers/stack-paper.jpg',
+      { title: 'Stack Paper', meta: 'Single from 1 Charge Productions', cover: 'media/covers/stack-paper.jpg', preview: 'media/previews/stack-paper.mp3',
         links: [['Spotify','stream','https://open.spotify.com/album/7o2KQxOvsnPM8Olr8AkPXn'], ['Apple Music','note','https://music.apple.com/us/album/stack-paper-single/1891539277'], ['All platforms','more','https://distrokid.com/hyperfollow/madscope1/stack-paper']] },
-      { title: "Til a Mawnin'", meta: 'Single from 1 Charge Productions', cover: 'media/covers/til-a-mawnin.jpg',
+      { title: "Til a Mawnin'", meta: 'Single from 1 Charge Productions', cover: 'media/covers/til-a-mawnin.jpg', preview: 'media/previews/til-a-mawnin.mp3',
         links: [['Spotify','stream','https://open.spotify.com/album/56jRZKs2EN43qtaYWaPINh'], ['Apple Music','note','https://music.apple.com/us/album/til-a-mawnin-single/1892399414'], ['All platforms','more','https://distrokid.com/hyperfollow/madscope1/til-a-mawnin']] },
       { title: 'Pull Up', meta: 'From the Rebirth EP', cover: 'media/covers/rebirth.jpg',
         links: [['Spotify','stream','https://open.spotify.com/album/69FgC0X9atAocUMPrE0esC'], ['Apple Music','note','https://music.apple.com/us/album/pull-up-single/1821136822?uo=4'], ['Deezer','wave','https://www.deezer.com/us/album/773820771']] },
@@ -91,6 +107,22 @@
     music.style.setProperty('--count', releases.length);
     $('#count-total').textContent = releases.length;
     releases.forEach(() => bars.appendChild(document.createElement('i')));
+
+    const pv = new Audio(); pv.preload = 'none';
+    const pvUI = on => {
+      const b = $('.pill-play', grid), l = $('.pill-preview', grid);
+      if (b) { b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); b.setAttribute('aria-label', `${on ? 'Stop' : 'Play'} 30-second preview of ${tTitle.textContent}`); }
+      if (l) l.textContent = on ? 'Stop preview' : 'Preview';
+    };
+    stopPreview = () => { if (!pv.paused) pv.pause(); pvUI(false); };
+    const togglePreview = r => {
+      if (!pv.paused && pv.dataset.src === r.preview) return stopPreview();
+      bg.stop();
+      if (pv.dataset.src !== r.preview) { pv.src = r.preview; pv.dataset.src = r.preview; }
+      pv.currentTime = 0; pv.volume = 1;
+      pv.play().then(() => pvUI(true)).catch(() => pvUI(false));
+    };
+    pv.addEventListener('ended', () => pvUI(false));
 
     let active = -1, timer;
     const sleeve = art.parentElement;
@@ -111,9 +143,14 @@
       if (animate) swapCover(r); else { art.src = r.cover; art.alt = `${r.title} cover art`; }
       label.style.backgroundImage = `url("${r.cover}")`;
       tTitle.textContent = r.title; tMeta.textContent = r.meta;
-      pill.innerHTML = r.links.map(([, icon]) => `<span><svg><use href="#i-${icon}"/></svg></span>`).join('');
-      pillLinks.innerHTML = r.links.map(([name, , href]) =>
+      stopPreview();
+      pill.innerHTML = (r.preview
+          ? `<button class="pill-play" type="button" aria-pressed="false" aria-label="Play 30-second preview of ${r.title}"><span class="tri"></span><span class="sq"></span></button>` : '')
+        + r.links.map(([, icon]) => `<span aria-hidden="true"><svg><use href="#i-${icon}"/></svg></span>`).join('');
+      pillLinks.innerHTML = (r.preview ? `<button class="pill-preview" type="button" tabindex="-1" aria-hidden="true">Preview</button>` : '')
+        + r.links.map(([name, , href]) =>
         `<a href="${href}" target="_blank" rel="noopener">${name}<span class="sr-only"> for ${r.title} (opens in a new tab)</span></a>`).join('');
+      if (r.preview) $$('.pill-play, .pill-preview', grid).forEach(b => b.addEventListener('click', () => togglePreview(r)));
       cur.textContent = i + 1;
       [...bars.children].forEach((b, k) => b.classList.toggle('on', k === i));
     };
@@ -170,5 +207,20 @@
       copy.textContent = 'Copied'; copy.classList.add('done');
       setTimeout(() => { copy.textContent = 'Copy'; copy.classList.remove('done'); }, 2200);
     });
+  }
+  /* ---------- Bio gallery: click a photo to view it larger ---------- */
+  const lightbox = $('#lightbox');
+  if (lightbox) {
+    const big = $('img', lightbox);
+    let opener = null;
+    $$('.gallery__item').forEach(btn => btn.addEventListener('click', () => {
+      opener = btn;
+      big.src = btn.dataset.full;
+      big.alt = $('img', btn).alt;
+      lightbox.showModal();
+    }));
+    $('.lightbox__close', lightbox).addEventListener('click', () => lightbox.close());
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.close(); }); // click outside the photo
+    lightbox.addEventListener('close', () => opener && opener.focus());
   }
 })();
