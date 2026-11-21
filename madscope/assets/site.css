@@ -338,20 +338,3 @@ ul{list-style:none}
 .rel-link:hover{color:var(--red)}
 .chips a{display:block;margin:-10px -18px;padding:10px 18px;transition:background .25s,color .25s}
 .chips a:hover{background:var(--red)}
-
-/* Bio photo gallery + lightbox */
-.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:56px}
-.gallery__item{display:block;width:100%;overflow:hidden;background:var(--surface-2);cursor:zoom-in}
-.gallery__item img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:50% 15%;transition:transform .6s var(--ease-out)}
-.gallery__item:hover img{transform:scale(1.04)}
-.lightbox{margin:auto;padding:0;border:0;background:none;overflow:visible;max-width:none;max-height:none}
-.lightbox::backdrop{background:rgba(0,0,0,.86)}
-.lightbox img{display:block;width:auto;height:auto;max-height:min(600px,85vh);max-width:90vw;box-shadow:0 30px 80px -20px #000}
-.lightbox[open] img{animation:lbIn .45s var(--ease-out) both}
-@keyframes lbIn{from{clip-path:inset(0 0 100% 0);transform:translateY(24px)}to{clip-path:inset(0);transform:none}}
-.lightbox__close{position:absolute;top:-18px;right:-18px;z-index:1;width:40px;height:40px;border-radius:50%;background:var(--red);color:var(--white);font-size:26px;line-height:1;display:grid;place-items:center}
-.lightbox__close:hover{background:var(--red-dark)}
-@media (max-width:700px){
-  .gallery{grid-template-columns:1fr}
-  .lightbox__close{top:-50px;right:0}
-}

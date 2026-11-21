@@ -208,19 +208,4 @@
       setTimeout(() => { copy.textContent = 'Copy'; copy.classList.remove('done'); }, 2200);
     });
   }
-  /* ---------- Bio gallery: click a photo to view it larger ---------- */
-  const lightbox = $('#lightbox');
-  if (lightbox) {
-    const big = $('img', lightbox);
-    let opener = null;
-    $$('.gallery__item').forEach(btn => btn.addEventListener('click', () => {
-      opener = btn;
-      big.src = btn.dataset.full;
-      big.alt = $('img', btn).alt;
-      lightbox.showModal();
-    }));
-    $('.lightbox__close', lightbox).addEventListener('click', () => lightbox.close());
-    lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.close(); }); // click outside the photo
-    lightbox.addEventListener('close', () => opener && opener.focus());
-  }
 })();
