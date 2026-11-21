@@ -112,7 +112,7 @@
     const pvUI = on => {
       const b = $('.pill-play', grid), l = $('.pill-preview', grid);
       if (b) { b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); b.setAttribute('aria-label', `${on ? 'Stop' : 'Play'} 30-second preview of ${tTitle.textContent}`); }
-      if (l) l.textContent = on ? 'Stop preview' : 'Play 30s preview';
+      if (l) l.textContent = on ? 'Stop preview' : 'Preview';
     };
     stopPreview = () => { if (!pv.paused) pv.pause(); pvUI(false); };
     const togglePreview = r => {
@@ -147,7 +147,7 @@
       pill.innerHTML = (r.preview
           ? `<button class="pill-play" type="button" aria-pressed="false" aria-label="Play 30-second preview of ${r.title}"><span class="tri"></span><span class="sq"></span></button>` : '')
         + r.links.map(([, icon]) => `<span aria-hidden="true"><svg><use href="#i-${icon}"/></svg></span>`).join('');
-      pillLinks.innerHTML = (r.preview ? `<button class="pill-preview" type="button" tabindex="-1" aria-hidden="true">Play 30s preview</button>` : '')
+      pillLinks.innerHTML = (r.preview ? `<button class="pill-preview" type="button" tabindex="-1" aria-hidden="true">Preview</button>` : '')
         + r.links.map(([name, , href]) =>
         `<a href="${href}" target="_blank" rel="noopener">${name}<span class="sr-only"> for ${r.title} (opens in a new tab)</span></a>`).join('');
       if (r.preview) $$('.pill-play, .pill-preview', grid).forEach(b => b.addEventListener('click', () => togglePreview(r)));

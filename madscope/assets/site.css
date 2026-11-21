@@ -205,8 +205,8 @@ ul{list-style:none}
 
 .platform-block{display:flex;align-items:flex-start;gap:26px;min-height:232px} /* room for preview + 3 links so releases don't shift */
 .pill{display:flex;flex-direction:column;gap:6px;padding:9px;border:1px solid var(--line-strong);border-radius:999px}
-.pill span{width:48px;height:48px;border-radius:50%;background:var(--surface-2);display:grid;place-items:center}
-.pill svg{width:20px;height:20px}
+.pill > span{width:48px;height:48px;border-radius:50%;background:var(--surface-2);display:grid;place-items:center}
+.pill > span svg{width:20px;height:20px}
 .pill-links{display:flex;flex-direction:column;gap:6px}
 .pill-links a{height:48px;min-width:220px;display:flex;align-items:center;border-bottom:1px solid var(--line);font-family:var(--display);font-weight:700;font-size:22px;text-transform:uppercase;letter-spacing:.02em;transition:color .25s,padding .3s var(--ease)}
 .pill-links a:hover{color:var(--red);padding-left:8px}
@@ -314,7 +314,7 @@ ul{list-style:none}
   .facts{position:static}
   .music__grid{grid-template-columns:1fr;gap:26px}
   .vinyl{width:min(56vw,300px)}
-  .pill span,.pill-play{width:42px;height:42px}
+  .pill > span,.pill-play{width:42px;height:42px}
   .pill-preview{height:42px;font-size:20px}
   .platform-block{min-height:212px}
   .pill-links a{height:42px;min-width:0;width:46vw;font-size:20px}
