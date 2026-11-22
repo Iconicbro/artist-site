@@ -208,4 +208,31 @@
       setTimeout(() => { copy.textContent = 'Copy'; copy.classList.remove('done'); }, 2200);
     });
   }
+  /* ---------- Merch: link into the store (live data when the store serves this site) ---------- */
+  const merch = $('#merch');
+  if (merch) {
+    const links = $$('[data-shop-link]', merch);
+    const trimSlash = s => s.endsWith('/') ? s.slice(0, -1) : s;
+    const setBase = base => links.forEach(a => { a.href = base + (a.dataset.shopLink ? '/' + a.dataset.shopLink : ''); a.removeAttribute('aria-disabled'); });
+    const comingSoon = () => {
+      links.forEach(a => { a.removeAttribute('href'); a.setAttribute('aria-disabled', 'true'); });
+      const btn = $('.btn[data-shop-link]', merch); if (btn) btn.textContent = 'Store opening soon';
+    };
+    const configured = ($('meta[name="shop-url"]') || {}).content || '';
+    fetch('/api/products?featured=1', { headers: { Accept: 'application/json' } })
+      .then(r => r.ok ? r.json() : Promise.reject(new Error('no store')))
+      .then(products => {
+        if (!Array.isArray(products) || !products.length) throw new Error('no products');
+        // Served by the store: show live products, prices and sold-out states.
+        $('#merch-grid', merch).innerHTML = products.slice(0, 4).map(p => `
+          <li class="slide in"><a class="mcard" href="/shop/p/${encodeURIComponent(p.slug)}">
+            <span class="mcard__img"><img src="${encodeURI(p.images[0] || '')}" alt="" width="800" height="800" loading="lazy" /></span>
+            <span class="mcard__name"></span>
+            <span class="mcard__meta">${p.in_stock ? p.price : 'Sold out'}${p.colors.length > 1 ? ` <span>${p.colors.length} colours</span>` : ''}</span>
+          </a></li>`).join('');
+        $$('.mcard', merch).forEach((el, i) => { $('.mcard__name', el).textContent = products[i].name; $('img', el).alt = products[i].name; });
+        $('.btn[data-shop-link]', merch).href = '/shop';
+      })
+      .catch(() => configured ? setBase(trimSlash(configured)) : comingSoon());
+  }
 })();

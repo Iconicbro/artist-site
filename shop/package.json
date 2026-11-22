@@ -1,0 +1,20 @@
+{
+  "name": "madscope-shop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Madscope merch store: shop, Stripe test checkout, admin, SQLite.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --no-warnings server.js",
+    "seed": "node --no-warnings seed.js --reset"
+  },
+  "engines": {
+    "node": ">=22.5"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.16"
+  }
+}

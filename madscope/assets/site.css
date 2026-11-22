@@ -338,3 +338,22 @@ ul{list-style:none}
 .rel-link:hover{color:var(--red)}
 .chips a{display:block;margin:-10px -18px;padding:10px 18px;transition:background .25s,color .25s}
 .chips a:hover{background:var(--red)}
+
+/* =========================================================
+   MERCH (home page) - links into the store when it's online
+   ========================================================= */
+.merch__head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(28px,5vh,56px)}
+.merch__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,28px)}
+.mcard{display:block}
+.mcard__img{display:block;overflow:hidden;background:var(--surface)}
+.mcard__img img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;transition:transform .6s var(--ease-out)}
+.mcard:hover .mcard__img img{transform:scale(1.04)}
+.mcard__name{display:block;margin-top:14px;font-family:var(--display);font-weight:800;font-size:24px;text-transform:uppercase;line-height:1}
+.mcard:hover .mcard__name{color:var(--red)}
+.mcard__meta{display:block;margin-top:6px;font-weight:600}
+.mcard__meta span{color:var(--muted);font-weight:400;margin-left:6px}
+.mcard[aria-disabled="true"]{cursor:default}
+.mcard[aria-disabled="true"]:hover .mcard__name{color:inherit}
+.btn[aria-disabled="true"]{opacity:.55;cursor:default;pointer-events:none}
+.merch__note{margin-top:26px}
+@media (max-width:900px){.merch__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}

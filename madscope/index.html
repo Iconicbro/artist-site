@@ -6,6 +6,8 @@
 <title>Madscope</title>
 <meta name="description" content="Madscope is a Jamaican dancehall recording and performing artist. Stream Stack Paper, read the bio and book Madscope through 1 Charge Productions." />
 <meta name="theme-color" content="#000000" />
+<!-- Where the merch store lives. Leave empty until the store is online; it is detected automatically when the store server serves this site. -->
+<meta name="shop-url" content="" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Big+Shoulders+Display:wght@700;800;900&display=swap" rel="stylesheet" />
@@ -32,6 +34,7 @@
     <nav class="bar__nav" aria-label="Main">
       <a href="#music">Music</a>
       <a href="bio.html">Bio</a>
+      <a href="#merch">Merch</a>
       <a href="#contact">Booking</a>
     </nav>
     <div class="play-wrap">
@@ -46,6 +49,7 @@
       <li><a href="#top">Home</a></li>
       <li><a href="#music">Music</a></li>
       <li><a href="bio.html">Bio</a></li>
+      <li><a href="#merch">Merch</a></li>
       <li><a href="#contact">Booking</a></li>
     </ul>
     <div class="menu__cols">
@@ -135,6 +139,39 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============ MERCH ============ -->
+<section class="section merch" id="merch" aria-labelledby="merch-title">
+  <div class="wrap">
+    <div class="merch__head">
+      <h2 class="title slide" id="merch-title">Merch</h2>
+      <a class="btn btn--red slide d1" href="#" data-shop-link="">Shop all merch</a>
+    </div>
+    <ul class="merch__grid" id="merch-grid">
+      <li class="slide"><a class="mcard" href="#" data-shop-link="p/stack-paper-tee">
+        <span class="mcard__img"><img src="media/merch/tee-black.svg" alt="Stack Paper Tee" width="800" height="800" loading="lazy" /></span>
+        <span class="mcard__name">Stack Paper Tee</span>
+        <span class="mcard__meta">$35.00 <span>2 colours</span></span>
+      </a></li>
+      <li class="slide d2"><a class="mcard" href="#" data-shop-link="p/madscope-logo-hoodie">
+        <span class="mcard__img"><img src="media/merch/hoodie-black.svg" alt="Madscope Logo Hoodie" width="800" height="800" loading="lazy" /></span>
+        <span class="mcard__name">Madscope Logo Hoodie</span>
+        <span class="mcard__meta">$70.00 <span>2 colours</span></span>
+      </a></li>
+      <li class="slide d3"><a class="mcard" href="#" data-shop-link="p/til-a-mawnin-long-sleeve">
+        <span class="mcard__img"><img src="media/merch/longsleeve-black.svg" alt="Til a Mawnin' Long Sleeve" width="800" height="800" loading="lazy" /></span>
+        <span class="mcard__name">Til a Mawnin' Long Sleeve</span>
+        <span class="mcard__meta">$42.00 <span>2 colours</span></span>
+      </a></li>
+      <li class="slide d1"><a class="mcard" href="#" data-shop-link="p/scope-snapback">
+        <span class="mcard__img"><img src="media/merch/cap-black.svg" alt="Scope Snapback" width="800" height="800" loading="lazy" /></span>
+        <span class="mcard__name">Scope Snapback</span>
+        <span class="mcard__meta">$30.00 <span>2 colours</span></span>
+      </a></li>
+    </ul>
+    <p class="merch__note label" id="merch-note">Free shipping on orders over $75.</p>
   </div>
 </section>
 
