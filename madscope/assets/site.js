@@ -93,17 +93,17 @@
   const music = $('#music');
   if (music) {
     const releases = [
-      { title: 'Stack Paper', meta: 'Single from 1 Charge Productions', cover: 'media/covers/stack-paper.jpg', preview: 'media/previews/stack-paper.mp3',
+      { title: 'Stack Paper', cover: 'media/covers/stack-paper.jpg', preview: 'media/previews/stack-paper.mp3',
         links: [['Spotify','stream','https://open.spotify.com/album/7o2KQxOvsnPM8Olr8AkPXn'], ['Apple Music','note','https://music.apple.com/us/album/stack-paper-single/1891539277'], ['All platforms','more','https://distrokid.com/hyperfollow/madscope1/stack-paper']] },
-      { title: "Til a Mawnin'", meta: 'Single from 1 Charge Productions', cover: 'media/covers/til-a-mawnin.jpg', preview: 'media/previews/til-a-mawnin.mp3',
+      { title: "Til a Mawnin'", cover: 'media/covers/til-a-mawnin.jpg', preview: 'media/previews/til-a-mawnin.mp3',
         links: [['Spotify','stream','https://open.spotify.com/album/56jRZKs2EN43qtaYWaPINh'], ['Apple Music','note','https://music.apple.com/us/album/til-a-mawnin-single/1892399414'], ['All platforms','more','https://distrokid.com/hyperfollow/madscope1/til-a-mawnin']] },
-      { title: 'Pull Up', meta: 'From the Rebirth EP', cover: 'media/covers/rebirth.jpg',
+      { title: 'Pull Up', cover: 'media/covers/rebirth.jpg',
         links: [['Spotify','stream','https://open.spotify.com/album/69FgC0X9atAocUMPrE0esC'], ['Apple Music','note','https://music.apple.com/us/album/pull-up-single/1821136822?uo=4'], ['Deezer','wave','https://www.deezer.com/us/album/773820771']] },
     ];
     releases.forEach(r => { const i = new Image(); i.src = r.cover; }); // preload covers
     const vinyl = $('#vinyl'), grid = $('#music-grid'), art = $('#sleeve-art'), label = $('.record__label');
     const pill = $('#pill'), pillLinks = $('#pill-links');
-    const tTitle = $('#track-title'), tMeta = $('#track-meta'), cur = $('#count-cur'), bars = $('#progress');
+    const tTitle = $('#track-title'), cur = $('#count-cur'), bars = $('#progress');
     music.style.setProperty('--count', releases.length);
     $('#count-total').textContent = releases.length;
     releases.forEach(() => bars.appendChild(document.createElement('i')));
@@ -142,7 +142,7 @@
       const r = releases[i];
       if (animate) swapCover(r); else { art.src = r.cover; art.alt = `${r.title} cover art`; }
       label.style.backgroundImage = `url("${r.cover}")`;
-      tTitle.textContent = r.title; tMeta.textContent = r.meta;
+      tTitle.textContent = r.title;
       stopPreview();
       pill.innerHTML = (r.preview
           ? `<button class="pill-play" type="button" aria-pressed="false" aria-label="Play 30-second preview of ${r.title}"><span class="tri"></span><span class="sq"></span></button>` : '')
@@ -200,13 +200,6 @@
         n.focus(); pick(n);
       });
     });
-    const copy = $('#copy');
-    copy.addEventListener('click', async () => {
-      try { await navigator.clipboard.writeText(EMAIL); }
-      catch { const t = document.createElement('textarea'); t.value = EMAIL; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
-      copy.textContent = 'Copied'; copy.classList.add('done');
-      setTimeout(() => { copy.textContent = 'Copy'; copy.classList.remove('done'); }, 2200);
-    });
   }
   /* ---------- Merch: link into the store (live data when the store serves this site) ---------- */
   const merch = $('#merch');
@@ -234,5 +227,20 @@
         $('.btn[data-shop-link]', merch).href = '/shop';
       })
       .catch(() => configured ? setBase(trimSlash(configured)) : comingSoon());
+  }
+  /* ---------- Bio photos: click to view larger ---------- */
+  const lightbox = $('#lightbox');
+  if (lightbox && lightbox.showModal) {
+    const big = $('img', lightbox);
+    let opener = null;
+    $$('.gallery__item').forEach(btn => btn.addEventListener('click', () => {
+      opener = btn;
+      big.src = btn.dataset.full;
+      big.alt = $('img', btn).alt;
+      lightbox.showModal();
+    }));
+    $('.lightbox__close', lightbox).addEventListener('click', () => lightbox.close());
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.close(); });
+    lightbox.addEventListener('close', () => opener && opener.focus());
   }
 })();
