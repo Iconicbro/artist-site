@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Store admin | Madscope</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Big+Shoulders+Display:wght@700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/madscope/assets/site.css" />
+<link rel="stylesheet" href="/static/shop.css" />
+<link rel="stylesheet" href="/static/admin.css" />
+</head>
+<body class="admin">
+
+<!-- ============ Login ============ -->
+<main id="login" class="login" hidden>
+  <form id="login-form" class="login__card" novalidate>
+    <img src="/madscope/media/logo.svg" alt="Madscope" width="228" height="37" />
+    <h1>Store admin</h1>
+    <label>Email<input name="email" type="email" autocomplete="username" required /></label>
+    <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
+    <p class="form-msg err" id="login-msg" role="alert"></p>
+    <button class="btn btn--red btn--wide" type="submit">Log in</button>
+  </form>
+</main>
+
+<!-- ============ App ============ -->
+<div id="app" hidden>
+  <header class="top">
+    <a href="/admin" class="top__brand"><img src="/madscope/media/logo.svg" alt="Madscope" width="228" height="37" /><span>Store admin</span></a>
+    <nav class="tabs" aria-label="Admin sections">
+      <a href="#today" data-tab="today">Today</a>
+      <a href="#orders" data-tab="orders">Orders</a>
+      <a href="#products" data-tab="products">Products</a>
+      <a href="#codes" data-tab="codes">Discount codes</a>
+      <a href="#emails" data-tab="emails">Emails</a>
+      <a href="#account" data-tab="account">Account</a>
+    </nav>
+    <div class="top__right"><a href="/shop" target="_blank" rel="noopener">View shop</a><button id="logout" type="button">Log out</button></div>
+  </header>
+
+  <main class="pane wrap" id="main">
+    <!-- Today -->
+    <section data-pane="today">
+      <div class="pane__head"><h1>Today</h1><a class="btn" href="/api/admin/orders.xlsx" download>Download orders (Excel)</a></div>
+      <div class="stats" id="stats"></div>
+      <div class="two">
+        <div><h2>Ready to ship</h2><div id="to-ship"></div></div>
+        <div><h2>Low stock</h2><div id="low-stock"></div></div>
+      </div>
+    </section>
+
+    <!-- Orders -->
+    <section data-pane="orders" hidden>
+      <div class="pane__head"><h1>Orders</h1><a class="btn" href="/api/admin/orders.xlsx" download>Download orders (Excel)</a></div>
+      <div class="filters" role="tablist" aria-label="Filter orders">
+        <button type="button" data-filter="" aria-pressed="true">All</button>
+        <button type="button" data-filter="paid" aria-pressed="false">To ship</button>
+        <button type="button" data-filter="shipped" aria-pressed="false">Shipped</button>
+        <button type="button" data-filter="pending" aria-pressed="false">Unpaid</button>
+      </div>
+      <div id="orders-list"></div>
+    </section>
+
+    <!-- Products -->
+    <section data-pane="products" hidden>
+      <div class="pane__head"><h1>Products</h1><button class="btn btn--red" type="button" id="new-product-btn">Add a product</button></div>
+      <form id="new-product" class="panel" hidden novalidate>
+        <h2>New product</h2>
+        <div class="drop" id="drop" tabindex="0" role="button" aria-describedby="drop-help">
+          <input type="file" id="photos" accept="image/*" multiple hidden />
+          <p><b>Drag photos here</b> or click to choose them</p>
+          <p class="muted" id="drop-help">JPG, PNG or WebP, up to 8 photos, 8 MB each. The first photo is the main one.</p>
+          <div class="previews" id="previews"></div>
+        </div>
+        <div class="fields">
+          <label class="f-full">Name<input name="name" placeholder="e.g. Stack Paper Tee" required /></label>
+          <label>Price ($)<input name="price" inputmode="decimal" placeholder="35.00" required /></label>
+          <label>Category<input name="category" placeholder="Tees" list="cats" /></label>
+          <datalist id="cats"><option>Tees</option><option>Hoodies</option><option>Accessories</option><option>Prints</option></datalist>
+          <label class="f-full">Description<textarea name="description" rows="3" placeholder="What it's made of, how it fits"></textarea></label>
+          <label>Sizes (separate with commas)<input name="sizes" value="S, M, L, XL, XXL" /></label>
+          <label>Colours (separate with commas)<input name="colors" value="Black" /></label>
+          <label>Starting stock for each size and colour<input name="stock" inputmode="numeric" value="10" /></label>
+          <label class="check"><input type="checkbox" name="featured" /> Show on the Madscope home page</label>
+        </div>
+        <p class="form-msg err" id="np-msg" role="alert"></p>
+        <div class="row"><button class="btn btn--red" type="submit">Save product</button><button class="btn" type="button" id="np-cancel">Cancel</button></div>
+      </form>
+      <div id="products-list"></div>
+    </section>
+
+    <!-- Discount codes -->
+    <section data-pane="codes" hidden>
+      <div class="pane__head"><h1>Discount codes</h1></div>
+      <form id="new-code" class="panel inline-form" novalidate>
+        <label>Code<input name="code" placeholder="SUMMER20" required /></label>
+        <label>Type<select name="kind"><option value="percent">% off</option><option value="amount">$ off</option></select></label>
+        <label>Amount<input name="value" inputmode="decimal" placeholder="20" required /></label>
+        <button class="btn btn--red" type="submit">Add code</button>
+        <p class="form-msg err" id="code-msg" role="alert"></p>
+      </form>
+      <div id="codes-list"></div>
+    </section>
+
+    <!-- Emails -->
+    <section data-pane="emails" hidden>
+      <div class="pane__head"><h1>Emails sent to customers</h1></div>
+      <p class="muted" id="email-mode"></p>
+      <div class="emails"><div id="emails-list"></div><iframe id="email-view" title="Email preview"></iframe></div>
+    </section>
+
+    <!-- Account -->
+    <section data-pane="account" hidden>
+      <div class="pane__head"><h1>Account</h1></div>
+      <p>Logged in as <b id="me"></b>. Payments: <b id="pay-mode"></b>.</p>
+      <form id="pw-form" class="panel narrow-form" novalidate>
+        <h2>Change password</h2>
+        <label>Current password<input name="current" type="password" autocomplete="current-password" /></label>
+        <label>New password (10+ characters)<input name="next" type="password" autocomplete="new-password" /></label>
+        <p class="form-msg" id="pw-msg" role="status"></p>
+        <button class="btn btn--red" type="submit">Change password</button>
+      </form>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="/static/admin.js" defer></script>
+</body>
+</html>

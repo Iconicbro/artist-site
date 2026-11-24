@@ -6,6 +6,8 @@
 <title>Madscope</title>
 <meta name="description" content="Madscope is a Jamaican dancehall recording and performing artist. Stream Stack Paper, read the bio and book Madscope through 1 Charge Productions." />
 <meta name="theme-color" content="#000000" />
+<!-- Where the merch store lives. Leave empty until the store is online; it is detected automatically when the store server serves this site. -->
+<meta name="shop-url" content="" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Big+Shoulders+Display:wght@700;800;900&display=swap" rel="stylesheet" />
@@ -32,6 +34,7 @@
     <nav class="bar__nav" aria-label="Main">
       <a href="#music">Music</a>
       <a href="bio.html">Bio</a>
+      <a href="#merch">Merch</a>
       <a href="#contact">Booking</a>
     </nav>
     <div class="play-wrap">
@@ -46,6 +49,7 @@
       <li><a href="#top">Home</a></li>
       <li><a href="#music">Music</a></li>
       <li><a href="bio.html">Bio</a></li>
+      <li><a href="#merch">Merch</a></li>
       <li><a href="#contact">Booking</a></li>
     </ul>
     <div class="menu__cols">
@@ -82,7 +86,7 @@
     <div class="release__body">
       <p class="label slide">New single</p>
       <h2 class="title slide d1" id="release-title">Stack Paper</h2>
-      <p class="lead slide d2">The latest from Madscope, managed by 1 Charge Productions. Out now on Spotify and Apple Music.</p>
+      <p class="lead slide d2">The latest from Madscope. Out now on Spotify and Apple Music.</p>
       <ul class="platforms slide d2">
         <li><a href="https://open.spotify.com/album/7o2KQxOvsnPM8Olr8AkPXn" target="_blank" rel="noopener"><span class="p-icon"><svg><use href="#i-stream"/></svg></span><span class="p-name">Spotify</span></a></li>
         <li><a href="https://music.apple.com/us/album/stack-paper-single/1891539277" target="_blank" rel="noopener"><span class="p-icon"><svg><use href="#i-note"/></svg></span><span class="p-name">Apple Music</span></a></li>
@@ -100,7 +104,7 @@
       <h2 class="title slide" id="about-title">Who is Madscope</h2>
       <div class="prose slide d1">
         <p>Kamau Hinds, known as Madscope, is a Jamaican recording and performing artist bringing island energy, lyrical precision and range to today's dancehall scene.</p>
-        <p>Raised in Portland, he started out as "Scope." The name grew into Madscope as his sharp, precise delivery became a sound of its own.</p>
+        <p>Raised in Portland, Jamaica, he started out as "Scope." The name grew into Madscope as his sharp, precise delivery became a sound of its own.</p>
       </div>
       <a href="bio.html" class="btn slide d2">Read the full bio</a>
     </div>
@@ -125,7 +129,6 @@
         </div>
         <div>
           <div class="track__mask"><h3 class="track__title" id="track-title">Stack Paper</h3></div>
-          <div class="track__mask"><p class="track__meta" id="track-meta">Single from 1 Charge Productions</p></div>
           <div class="platform-block">
             <div class="pill" id="pill"></div>
             <div class="pill-links" id="pill-links"></div>
@@ -135,6 +138,39 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============ MERCH ============ -->
+<section class="section merch" id="merch" aria-labelledby="merch-title">
+  <div class="wrap">
+    <div class="merch__head">
+      <h2 class="title slide" id="merch-title">Merch</h2>
+      <a class="btn btn--red slide d1" href="#" data-shop-link="">Shop all merch</a>
+    </div>
+    <ul class="merch__grid" id="merch-grid">
+      <li class="slide"><a class="mcard" href="#" data-shop-link="p/stack-paper-tee">
+        <span class="mcard__img"><img src="media/merch/tee-black.svg" alt="Stack Paper Tee" width="800" height="800" loading="lazy" /></span>
+        <span class="mcard__name">Stack Paper Tee</span>
+        <span class="mcard__meta">$35.00 <span>2 colours</span></span>
+      </a></li>
+      <li class="slide d2"><a class="mcard" href="#" data-shop-link="p/madscope-logo-hoodie">
+        <span class="mcard__img"><img src="media/merch/hoodie-black.svg" alt="Madscope Logo Hoodie" width="800" height="800" loading="lazy" /></span>
+        <span class="mcard__name">Madscope Logo Hoodie</span>
+        <span class="mcard__meta">$70.00 <span>2 colours</span></span>
+      </a></li>
+      <li class="slide d3"><a class="mcard" href="#" data-shop-link="p/til-a-mawnin-long-sleeve">
+        <span class="mcard__img"><img src="media/merch/longsleeve-black.svg" alt="Til a Mawnin' Long Sleeve" width="800" height="800" loading="lazy" /></span>
+        <span class="mcard__name">Til a Mawnin' Long Sleeve</span>
+        <span class="mcard__meta">$42.00 <span>2 colours</span></span>
+      </a></li>
+      <li class="slide d1"><a class="mcard" href="#" data-shop-link="p/scope-snapback">
+        <span class="mcard__img"><img src="media/merch/cap-black.svg" alt="Scope Snapback" width="800" height="800" loading="lazy" /></span>
+        <span class="mcard__name">Scope Snapback</span>
+        <span class="mcard__meta">$30.00 <span>2 colours</span></span>
+      </a></li>
+    </ul>
+    <p class="merch__note label" id="merch-note">Free shipping on orders over $75.</p>
   </div>
 </section>
 
@@ -167,13 +203,12 @@
         <div class="field">
           <span class="label">Email</span>
           <div class="field__row">
-            <a class="field__val" href="mailto:1chargeproductions@gmail.com">1chargeproductions@gmail.com</a>
-            <button class="copy" id="copy" aria-label="Copy email address">Copy</button>
+            <a class="field__val field__val--one" href="mailto:1chargeproductions@gmail.com">1chargeproductions@gmail.com</a>
           </div>
         </div>
         <div class="field">
           <span class="label">WhatsApp</span>
-          <a class="field__val" href="https://wa.me/19544445396">954-444-5396</a>
+          <a class="field__val" href="https://wa.me/17865291130">(786) 529-1130</a>
         </div>
         <div class="field">
           <span class="label">Instagram</span>
@@ -200,7 +235,7 @@
     </div>
     <div class="footer__base">
       <span>&copy; 2026 Madscope. Managed by 1 Charge Productions.</span>
-      <span>Bring the energy. Make the connection. Let's work.</span>
+      <span>Designed by <a href="https://iconictheorystudio.com" target="_blank" rel="noopener">iconictheorystudio.com</a></span>
     </div>
   </div>
 </footer>

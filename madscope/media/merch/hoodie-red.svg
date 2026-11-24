@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+<defs><radialGradient id="bg" cx="50%" cy="42%" r="70%"><stop offset="0" stop-color="#2a2320"/><stop offset="1" stop-color="#16120f"/></radialGradient></defs>
+<rect width="800" height="800" fill="url(#bg)"/>
+<ellipse cx="400" cy="730" rx="250" ry="22" fill="#000" opacity=".35"/>
+<path d="M300 170 Q300 95 400 92 Q500 95 500 170 L620 240 L680 540 L604 556 L552 370 L560 700 L240 700 L248 370 L196 556 L120 540 L180 240 Z" fill="#b9161e" stroke="#000" stroke-opacity=".35" stroke-width="3"/>
+<path d="M330 175 Q400 250 470 175 Q470 120 400 118 Q330 120 330 175 Z" fill="#000" opacity=".35"/>
+<line x1="385" y1="230" x2="380" y2="300" stroke="#ddd" stroke-width="5"/><line x1="415" y1="230" x2="420" y2="300" stroke="#ddd" stroke-width="5"/>
+<path d="M300 560 L500 560 L520 640 L280 640 Z" fill="#000" opacity=".18"/>
+<g transform="translate(400 440) scale(1.1)">
+<text x="0" y="0" text-anchor="middle" font-family="Impact,'Arial Narrow',sans-serif" font-size="64" font-style="italic" font-weight="900" fill="#f7f3ee" letter-spacing="1">MADSCOPE</text>
+<circle cx="74" cy="-23" r="21" fill="none" stroke="#e3262e" stroke-width="6"/><circle cx="74" cy="-23" r="6" fill="#e3262e"/>
+<rect x="-150" y="14" width="300" height="5" fill="#e3262e"/></g>
+</svg>

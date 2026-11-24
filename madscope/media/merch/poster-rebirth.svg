@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+<defs><radialGradient id="bg" cx="50%" cy="42%" r="70%"><stop offset="0" stop-color="#2a2320"/><stop offset="1" stop-color="#16120f"/></radialGradient></defs>
+<rect width="800" height="800" fill="url(#bg)"/>
+<ellipse cx="400" cy="730" rx="250" ry="22" fill="#000" opacity=".35"/>
+<g transform="rotate(-3 400 400)">
+<rect x="200" y="110" width="400" height="560" fill="#0d0b0a" stroke="#f7f3ee" stroke-width="10"/>
+<circle cx="400" cy="330" r="130" fill="none" stroke="#e3262e" stroke-width="18"/><circle cx="400" cy="330" r="62" fill="none" stroke="#e3262e" stroke-width="10"/><circle cx="400" cy="330" r="16" fill="#e3262e"/>
+<line x1="230" y1="330" x2="570" y2="330" stroke="#e3262e" stroke-width="4"/><line x1="400" y1="160" x2="400" y2="500" stroke="#e3262e" stroke-width="4"/>
+<text x="400" y="575" text-anchor="middle" font-family="Impact,'Arial Narrow',sans-serif" font-size="74" font-weight="900" fill="#f7f3ee" letter-spacing="4">REBIRTH</text>
+<text x="400" y="625" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" fill="#a8a098" letter-spacing="6">MADSCOPE  /  EP</text></g>
+</svg>
